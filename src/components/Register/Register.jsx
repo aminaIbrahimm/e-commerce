@@ -1,0 +1,88 @@
+import React, { useContext, useEffect, useState } from 'react'
+import Style from './Register.module.css'
+import { useFormik } from 'formik'
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import * as YUP from 'yup';
+import { authContext } from '../../Context/AuthContextProvider';
+
+export default function Register() {
+  let {setToken} = useContext(authContext)
+  let navigate = useNavigate()
+  const [errMessage, setErrMessage] = useState(null)
+  const [isLoading, setisLoading] = useState(false)
+  let validationSchema = YUP.object().shape({
+    name: YUP.string().min(3,"name min 3 char").max(10,"name max 10 char").required("name is required"),
+    email: YUP.string().email("email is in-valid").required("email is required"),
+    password: YUP.string().matches(/^\w{6,15}$/, "password min 6 to 15 letters").required("password is required"),
+    rePassword: YUP.string().oneOf([YUP.ref("password")],"password and rePassword don't match").required("rePassword is required"),
+    phone:YUP.string().matches(/^01[0125][0-9]{8}$/,"phone must be egyption number").required("phone is required"),
+  })
+  let registerForm = useFormik({
+    initialValues:{
+      name:"",
+      email:"",
+      password:"",
+      rePassword:"",
+      phone:"",
+    },
+    validationSchema,
+    onSubmit:(values)=>{
+      setisLoading(true)
+      axios.post("https://ecommerce.routemisr.com/api/v1/auth/signup",values)
+      .then((res)=>{
+        console.log(res);
+        setToken(res.data.token)
+        localStorage.setItem("token",res.data.token)
+        navigate("/")
+      })
+      .catch((error)=>{
+        console.log(error);
+        setErrMessage(error.response.data.message)
+      }).finally(()=>{
+        setisLoading(false)
+      })
+    } 
+  })
+  return <>
+  {errMessage ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+    {errMessage}
+  </div> : null}
+  <form onSubmit={registerForm.handleSubmit} className='w-1/2 mx-auto'>
+    <h2 className='my-5 text-xl'>Register Now:</h2>
+    <div>
+      <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">name</label>
+      <input name='name' value={registerForm.values.name} onChange={registerForm.handleChange} onBlur={registerForm.handleBlur} type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+    </div>
+    {registerForm.errors.name && registerForm.touched.name ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+    {registerForm.errors.name}</div> : null}
+    <div>
+      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">email</label>
+      <input name='email' value={registerForm.values.email} onChange={registerForm.handleChange} onBlur={registerForm.handleBlur} type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+    </div>
+    {registerForm.errors.email && registerForm.touched.email ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+    {registerForm.errors.email}</div> : null}
+    <div>
+      <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">password</label>
+      <input name='password' value={registerForm.values.password} onChange={registerForm.handleChange} onBlur={registerForm.handleBlur} type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+    </div>
+    {registerForm.errors.password && registerForm.touched.password ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+    {registerForm.errors.password}</div> : null}
+    <div>
+      <label htmlFor="rePassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">rePassword</label>
+      <input name='rePassword' value={registerForm.values.rePassword} onChange={registerForm.handleChange} onBlur={registerForm.handleBlur} type="password" id="rePassword" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+    </div>
+    {registerForm.errors.rePassword && registerForm.touched.rePassword ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+    {registerForm.errors.rePassword}</div> : null}
+    <div>
+      <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">phone</label>
+      <input name='phone' value={registerForm.values.phone} onChange={registerForm.handleChange} onBlur={registerForm.handleBlur} type="tel" id="phone" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+    </div>
+    {registerForm.errors.phone && registerForm.touched.phone ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
+    {registerForm.errors.phone}</div> : null}
+    <button disabled={isLoading ?true : false} type="submit" className="my-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
+      {isLoading ? <i className="fa-solid fa-spinner"></i> : "Register"}
+    </button>
+  </form>
+  </>
+}
