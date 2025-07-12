@@ -1,4 +1,4 @@
-import Rea t, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Style from './AllOrder.module.css'
 import { authContext } from '../../Context/AuthContextProvider'
 import axios from 'axios'
