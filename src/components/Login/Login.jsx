@@ -8,6 +8,7 @@ import { authContext } from '../../Context/AuthContextProvider';
 import { jwtDecode } from 'jwt-decode';
 
 export default function Login() {
+  const [showPassword, setShowPassword] = useState(false);
   let {setToken,setidUser} = useContext(authContext)
   let navigate = useNavigate()
   const [errMessage, setErrMessage] = useState(null)
@@ -45,26 +46,34 @@ export default function Login() {
   return <>
   {errMessage ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
   {errMessage}</div> : null}
-  <form onSubmit={loginForm.handleSubmit} className='w-1/2 mx-auto'>
-    <h2 className='my-5 text-xl'>Login Now:</h2>
+  <div className="py-16">
+    <form onSubmit={loginForm.handleSubmit} className='w-1/2 mx-auto'>
+    <h2 className='my-5 text-2xl text-green-600'> <i className="fa-solid fa-user-pen"></i> Login Now :</h2>
     <div>
-      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">email</label>
+      <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">email :</label>
       <input name='email' value={loginForm.values.email} onChange={loginForm.handleChange} onBlur={loginForm.handleBlur} type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
     </div>
     {loginForm.errors.email && loginForm.touched.email ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
     {loginForm.errors.email}</div> : null}
     <div>
-      <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">password</label>
-      <input name='password' value={loginForm.values.password} onChange={loginForm.handleChange} onBlur={loginForm.handleBlur} type="password" id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+      <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password :</label>
+      <div className="relative">
+        <input name='password' value={loginForm.values.password} onChange={loginForm.handleChange} onBlur={loginForm.handleBlur} type={showPassword ? "text" : "password"} id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+        <span onClick={() => setShowPassword(!showPassword)} className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-gray-500">
+          {showPassword ? ( <i className="fa-solid fa-eye-slash"></i> ) : ( <i className="fa-solid fa-eye"></i> )}
+        </span>
+      </div>
     </div>
     {loginForm.errors.password && loginForm.touched.password ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
     {loginForm.errors.password}</div> : null}
+    <div className='flex justify-between items-center mt-4'>
+      <button onClick={() => navigate("/forgetPassword")}   className=' hover:text-green-800'>Forget Your Password ?</button> 
+      <p>Create a New Account : <button onClick={() => navigate("/register")} type="button" className='text-green-500 hover:text-green-700'>Register</button></p>
+    </div>
     <button disabled={isLoading ?true : false} type="submit" className="my-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
       {isLoading ? <i className="fa-solid fa-spinner"></i> : "Login"}
     </button>
-    <button onClick={() => navigate("/forgetPassword")} disabled={isLoading ?true : false} type="button" className="my-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-      {isLoading ? <i className="fa-solid fa-spinner"></i> : "Forget Password"}
-    </button>
   </form>
+  </div>
   </>
 }

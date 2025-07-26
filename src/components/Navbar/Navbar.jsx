@@ -1,12 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react'
 import Style from './Navbar.module.css'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import logo from '../../assets/logo.svg'
 import { authContext } from '../../Context/AuthContextProvider'
 
 export default function Navbar() {
   let {token,setToken} = useContext(authContext)
   let navigate = useNavigate("token")
+  const location = useLocation();
   function logout() {
     setToken(null)
     localStorage.removeItem("token")
@@ -33,8 +34,8 @@ export default function Navbar() {
           <li><i className="fa-brands fa-yahoo"></i></li>
           <li><i className="fa-brands fa-github"></i></li>
           {token ? <li><span onClick={()=>logout()}>Logout</span></li> : <>
-            <li><Link to='/login'>Login</Link></li>
-            <li><Link to='/register'>Register</Link></li>
+            <li><Link className={`hover:text-green-600 ${location.pathname === "/login" ? "text-green-600 font-bold" : ""}`} to='/login'>Login</Link></li>
+            <li><Link className={`hover:text-green-600 ${location.pathname === "/register" ? "text-green-600 font-bold" : ""}`} to='/register'>Register</Link></li>
           </>}
         </ul>
       </div>

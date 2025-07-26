@@ -41,15 +41,11 @@ export default function Cart() {
       />
     </div>
   }
-  return <div className='h-screen'>
+  return <div className=''>
     <div className='text-center my-10 '>
       <div>
-        <h2>num of cart : {numOfCart} </h2>
-        <h2>total price: {totalPrice} EGP</h2>
+        <h2 className='capitalize'>num of cart : {numOfCart} </h2>
       </div>
-    </div>
-    <div className="flex justify-end mb-4">
-      <button onClick={deleteCart} type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Clear Cart </button>
     </div>
     {products?.length>0 ? <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -106,12 +102,17 @@ export default function Cart() {
               <span onClick={()=>{removeItemFromCart(product.product._id)}} className="cursor-pointer font-medium text-red-600 dark:text-red-500 hover:underline">Remove</span>
             </td>
           </tr> )}
+          
         </tbody>
       </table>
-      <Link to= {"/payment"} type="button" class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">Payment</Link>
-
+      <div className="flex justify-center">
+        <h2 className='capitalize text-2xl text-green-600 my-2'>total price: {totalPrice} EGP</h2>
+      </div>
+      <div className="flex justify-end mt-3">
+        <button onClick={deleteCart} type="button" className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-5 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">Clear Cart </button>
+        <Link to="/payment" type="button" className="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-5 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"> Payment </Link>
+      </div>
     </div>
-    
      : <div class="text-center p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
   <span class="font-medium">Not Product Found</span></div>}
   </div>
