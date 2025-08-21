@@ -4,7 +4,7 @@ import { authContext } from './AuthContextProvider';
 
 export let wishlistContext = createContext();
 
-export default function WishListContextProvider({ children }) {
+export default function WishlistContextProvider({ children }) {
   const [wishlist, setWishlist] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState(null);

@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react';
-import { wishlistContext } from '../../Context/WishListContextProvider.jsx';
+import { wishlistContext } from '../../Context/WishlistContextProvider';
 import { ColorRing } from 'react-loader-spinner';
 import { cartContext } from '../../Context/CartContextProvider';
 import toast from 'react-hot-toast';
