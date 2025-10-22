@@ -4,7 +4,7 @@ import { ColorRing } from 'react-loader-spinner';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { cartContext } from '../../Context/CartContextProvider';
-import { wishlistContext } from '../../Context/WishListcontextProvider';
+import { wishlistContext } from '../../Context/WishlistContextProvider';
 
 export default function DisplayProducts({ filterproducts }) {
   const { addToWishlist, removeFromWishlist, getWishlist,wishlistIds } = useContext(wishlistContext);

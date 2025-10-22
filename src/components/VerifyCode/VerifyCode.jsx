@@ -24,7 +24,6 @@ export default function VerifyCode() {
       setLoading(false);
     }
   }
-
   return (
     <div className="py-10">
       <form onSubmit={handleVerifyCode} className='w-1/2 mx-auto my-10'>

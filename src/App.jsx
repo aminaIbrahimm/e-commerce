@@ -16,7 +16,7 @@ import ProductDetails from './components/ProductDetails/ProductDetails';
 import CartContextProvider from './Context/CartContextProvider';
 import { Toaster } from 'react-hot-toast';
 import WishList from './components/WishList/WishList';
-import WishListContextProvider from './Context/WishlistContextProvider.jsx';
+import WishlistContextProvider from './Context/WishlistContextProvider';
 import Payment from './components/Payment/Payment';
 import AllOrder from './components/AllOrder/AllOrder';
 import ForgetPassword from './components/ForgetPassword/ForgetPassword';
@@ -46,10 +46,10 @@ export default function App() {
   return <>
    <AuthContextProvider>
     <CartContextProvider>
-      <WishListContextProvider>
+      <WishlistContextProvider>
         <RouterProvider router={router}/>
         <Toaster />
-      </WishListContextProvider>
+      </WishlistContextProvider>
     </CartContextProvider>
   </AuthContextProvider>
   </>
