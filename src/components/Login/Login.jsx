@@ -54,7 +54,7 @@ export default function Login() {
         </div>
       ) : null}
       <div
-        className="my-15.5 bg-cover bg-center"
+        className="bg-cover bg-center"
         style={{ backgroundImage: `url(${bgLogin})` }}
       >
         <div className="absolute inset-0 bg-black/80"></div>

@@ -1,10 +1,11 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Style from './Register.module.css'
 import { useFormik } from 'formik'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import * as YUP from 'yup';
 import { authContext } from '../../Context/AuthContextProvider';
+import bgLogin from '../../assets/ecommerce.PNG'
+
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
@@ -46,60 +47,198 @@ export default function Register() {
       })
     } 
   })
-  return <>
-  {errMessage ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-    {errMessage}
-  </div> : null}
-  <div className="py-10">
-    <form onSubmit={registerForm.handleSubmit} className='w-1/2 mx-auto'>
-      <h2 className='my-5 text-green-600 text-2xl'><i className="fa-solid fa-user-plus"></i> Register Now :</h2>
-      <div>
-        <label htmlFor="name" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">name :</label>
-        <input name='name' value={registerForm.values.name} onChange={registerForm.handleChange} onBlur={registerForm.handleBlur} type="text" id="first_name" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-      </div>
-      {registerForm.errors.name && registerForm.touched.name ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-      {registerForm.errors.name}</div> : null}
-      <div>
-        <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">email :</label>
-        <input name='email' value={registerForm.values.email} onChange={registerForm.handleChange} onBlur={registerForm.handleBlur} type="email" id="email" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-      </div>
-      {registerForm.errors.email && registerForm.touched.email ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-      {registerForm.errors.email}</div> : null}
-      <div>
-        <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password :</label>
-        <div className="relative">
-          <input name='password' value={registerForm.values.password} onChange={registerForm.handleChange} onBlur={registerForm.handleBlur} type={showPassword ? "text" : "password"} id="password" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-          <span onClick={()=> setShowPassword(!showPassword)} className='absolute top-1/2 right-3 cursor-pointer -translate-y-1/2 text-gray-500'>
-            {showPassword ? ( <i className="fa-solid fa-eye-slash"></i> ) : ( <i className="fa-solid fa-eye"></i> )}
-          </span>
+  return (
+    <>
+      {errMessage ? (
+        <div
+          className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+          role="alert"
+        >
+          {errMessage}
         </div>
+      ) : null}
+      <div
+        className=" bg-cover bg-center"
+        style={{ backgroundImage: `url(${bgLogin})` }}
+      >
+        <div className="absolute inset-0 bg-black/80"></div>
+
+        <form
+          onSubmit={registerForm.handleSubmit}
+          className="relative w-[80%] m-25 md:w-1/2 mx-auto border border-green-600 rounded-2xl p-5 bg-gray-200 shadow-xl"
+        >
+          <h2 className="my-3 text-green-600 text-2xl">
+            <i className="fa-solid fa-user-plus"></i> Register Now :
+          </h2>
+          <div>
+            <label
+              htmlFor="name"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              name :
+            </label>
+            <input
+              name="name"
+              value={registerForm.values.name}
+              onChange={registerForm.handleChange}
+              onBlur={registerForm.handleBlur}
+              type="text"
+              id="first_name"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
+          {registerForm.errors.name && registerForm.touched.name ? (
+            <div
+              className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+              role="alert"
+            >
+              {registerForm.errors.name}
+            </div>
+          ) : null}
+          <div>
+            <label
+              htmlFor="email"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              email :
+            </label>
+            <input
+              name="email"
+              value={registerForm.values.email}
+              onChange={registerForm.handleChange}
+              onBlur={registerForm.handleBlur}
+              type="email"
+              id="email"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
+          {registerForm.errors.email && registerForm.touched.email ? (
+            <div
+              className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+              role="alert"
+            >
+              {registerForm.errors.email}
+            </div>
+          ) : null}
+          <div>
+            <label
+              htmlFor="password"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Password :
+            </label>
+            <div className="relative">
+              <input
+                name="password"
+                value={registerForm.values.password}
+                onChange={registerForm.handleChange}
+                onBlur={registerForm.handleBlur}
+                type={showPassword ? "text" : "password"}
+                id="password"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute top-1/2 right-3 cursor-pointer -translate-y-1/2 text-gray-500"
+              >
+                {showPassword ? (
+                  <i className="fa-solid fa-eye-slash"></i>
+                ) : (
+                  <i className="fa-solid fa-eye"></i>
+                )}
+              </span>
+            </div>
+          </div>
+          {registerForm.errors.password && registerForm.touched.password ? (
+            <div
+              className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+              role="alert"
+            >
+              {registerForm.errors.password}
+            </div>
+          ) : null}
+          <div>
+            <label
+              htmlFor="rePassword"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              rePassword :
+            </label>
+            <div className="relative">
+              <input
+                name="rePassword"
+                value={registerForm.values.rePassword}
+                onChange={registerForm.handleChange}
+                onBlur={registerForm.handleBlur}
+                type={showRePassword ? "text" : "password"}
+                id="rePassword"
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+              <span
+                onClick={() => setShowRePassword(!showRePassword)}
+                className="absolute top-1/2 right-3 cursor-pointer -translate-y-1/2 text-gray-500"
+              >
+                {showRePassword ? (
+                  <i className="fa-solid fa-eye-slash"></i>
+                ) : (
+                  <i className="fa-solid fa-eye"></i>
+                )}
+              </span>
+            </div>
+          </div>
+          {registerForm.errors.rePassword && registerForm.touched.rePassword ? (
+            <div
+              className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+              role="alert"
+            >
+              {registerForm.errors.rePassword}
+            </div>
+          ) : null}
+          <div>
+            <label
+              htmlFor="phone"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              phone :
+            </label>
+            <input
+              name="phone"
+              value={registerForm.values.phone}
+              onChange={registerForm.handleChange}
+              onBlur={registerForm.handleBlur}
+              type="tel"
+              id="phone"
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            />
+          </div>
+          {registerForm.errors.phone && registerForm.touched.phone ? (
+            <div
+              className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+              role="alert"
+            >
+              {registerForm.errors.phone}
+            </div>
+          ) : null}
+          <p className="text-center mt-2">
+            Login to your existing account :
+            <button
+              onClick={() => navigate("/login")}
+              type="button"
+              className="capitalize text-green-600 cursor-pointer hover:text-green-800"
+            >
+              {" "}
+              sign in
+            </button>
+          </p>
+          <button
+            disabled={isLoading ? true : false}
+            type="submit"
+            className="my-2 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-0 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
+          >
+            {isLoading ? <i className="fa-solid fa-spinner"></i> : "Register"}
+          </button>
+        </form>
       </div>
-      {registerForm.errors.password && registerForm.touched.password ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-      {registerForm.errors.password}</div> : null}
-      <div>
-        <label htmlFor="rePassword" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">rePassword :</label>
-        <div className="relative">
-          <input name='rePassword' value={registerForm.values.rePassword} onChange={registerForm.handleChange} onBlur={registerForm.handleBlur} type={showRePassword ? "text" : "password"} id="rePassword" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-          <span onClick={()=> setShowRePassword(!showRePassword)} className='absolute top-1/2 right-3 cursor-pointer -translate-y-1/2 text-gray-500'>
-            {showRePassword ? ( <i className="fa-solid fa-eye-slash"></i> ) : ( <i className="fa-solid fa-eye"></i> )}
-          </span>
-        </div>
-      </div>
-      {registerForm.errors.rePassword && registerForm.touched.rePassword ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-      {registerForm.errors.rePassword}</div> : null}
-      <div>
-        <label htmlFor="phone" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">phone :</label>
-        <input name='phone' value={registerForm.values.phone} onChange={registerForm.handleChange} onBlur={registerForm.handleBlur} type="tel" id="phone" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
-      </div>
-      {registerForm.errors.phone && registerForm.touched.phone ? <div className="p-4 mb-4 text-sm text-center text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400" role="alert">
-      {registerForm.errors.phone}</div> : null}
-      <p className='text-center mt-2'>Login to your existing account :
-        <button onClick={()=> navigate("/login")} type='button' className='capitalize text-green-600 cursor-pointer hover:text-green-800'> sign in</button>
-      </p>
-      <button disabled={isLoading ?true : false} type="submit" className="my-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800">
-        {isLoading ? <i className="fa-solid fa-spinner"></i> : "Register"}
-      </button>
-    </form>
-  </div>
-  </>
+    </>
+  );
 }
