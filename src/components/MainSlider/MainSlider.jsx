@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import Style from './MainSlider.module.css'
 import Slider from 'react-slick'
 import img1 from '../../assets/grocery-banner.png'
 import img2 from '../../assets/grocery-banner-2.jpeg'

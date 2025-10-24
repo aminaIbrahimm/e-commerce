@@ -41,8 +41,8 @@ export default function Brands() {
   }
 
   return (
-    <div className='container mx-auto px-16'>
-      <h1 className='text-center font-semibold text-green-600 text-4xl my-9 p-3'>All Brands</h1>
+    <div className='px-2'>
+      <h1 className='text-center font-semibold text-green-600 text-4xl mt-20 p-3'>All Brands</h1>
       {selectedBrand && (
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(0,0,0,0.5)]" onClick={closeModal} >
         <div onClick={(e) => e.stopPropagation()} className="bg-white flex justify-between items-center dark:bg-gray-800 rounded-lg shadow-xl w-[450px] max-w-full p-8 relative">
@@ -58,12 +58,12 @@ export default function Brands() {
         </div>
       </div>
     )}
-      <div className="grid grid-cols-1 sm:grid-cols-3 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
         {brands.map((brand) => (
           <div
             onClick={() => openModal(brand)}
             key={brand._id}
-            className="hover:shadow-green-300 shadow-md transition duration-300 bg-white border border-gray-200 rounded-lg cursor-pointer dark:bg-gray-800 dark:border-gray-700"
+            className="hover:shadow-green-700 shadow-md transition duration-300 bg-white border border-gray-200 rounded-lg cursor-pointer dark:bg-gray-800 dark:border-gray-700"
           >
             <img className="w-full h-44 object-contain" src={brand.image} alt={brand.name} />
             <p className="text-center mb-3 p-3">{brand.name}</p>

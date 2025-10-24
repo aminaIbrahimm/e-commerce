@@ -82,7 +82,7 @@ export default function DisplayProducts({ filterproducts }) {
   const displayData = filterproducts?.length > 0 ? filterproducts : products;
 
   return (
-    <div className="parent gap-3 grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+    <div className="parent mx-2 gap-2 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
       {displayData.map((product) => (
         <div key={product._id} className="group cursor-pointer relative shadow-xl p-2 overflow-hidden">
           <Link to={`/ProductDetails/${product.id}/${product.category.name}`}>

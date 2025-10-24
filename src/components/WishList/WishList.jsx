@@ -43,21 +43,43 @@ export default function WishList() {
       </div>
   }
   return (
-    <div className='bg-gray-100 m-15 p-7 rounded'>
-      <h2 className='text-3xl mb-4'>My wish List</h2>
-      {wishlist?.length === 0 ? <p>No items in wishlist.</p> : (
+    <div className="bg-gray-100 m-2 md:m-15 p-7 rounded mt-25">
+      <h2 className="text-3xl font-bold text-teal-900 mb-4">My wish List</h2>
+      {wishlist?.length === 0 ? (
+        <p>No items in wishlist.</p>
+      ) : (
         <div className="">
-          {wishlist?.map(product => (
-            <div key={product._id} className="p-4 rounded shadow flex items-center justify-between">
-              <img src={product.imageCover} alt={product.title} className=" h-32 object-cover mb-2" />
-                <div className='flex-1 ms-3'>
-                  <h3 className="text-lg">{product.title}</h3>
-                  <h3 className='text-green-600'>{product.price} EGP</h3>
-                  <button onClick={() => {removeItems(product._id)}} className=" text-red-600 cursor-pointer font-semibold mt-1">
-                    <i className="fa-solid fa-trash me-1"></i>
-                    Remove</button>
-                </div>
-                <button onClick={()=>{addCart(product._id)}} className='ms-auto p-2  hover:bg-green-500 hover:text-white cursor-pointer transition-all duration-200 border border-green-400 rounded-md'>add To Cart</button>
+          {wishlist?.map((product) => (
+            <div
+              key={product._id}
+              className="p-4 rounded shadow flex items-center justify-between"
+            >
+              <img
+                src={product.imageCover}
+                alt={product.title}
+                className=" h-32 object-cover mb-2"
+              />
+              <div className="flex-1 ms-3">
+                <h3 className="text-lg">{product.title}</h3>
+                <h3 className="text-green-600">{product.price} EGP</h3>
+                <button
+                  onClick={() => {
+                    removeItems(product._id);
+                  }}
+                  className=" text-red-600 cursor-pointer font-semibold mt-1"
+                >
+                  <i className="fa-solid fa-trash me-1"></i>
+                  Remove
+                </button>
+              </div>
+              <button
+                onClick={() => {
+                  addCart(product._id);
+                }}
+                className="mx-auto p-2 mt-2  hover:bg-green-500 hover:text-white cursor-pointer transition-all duration-200 border border-green-400 rounded-md"
+              >
+                add To Cart
+              </button>
             </div>
           ))}
         </div>

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Style from './Cart.module.css'
 import { cartContext } from '../../Context/CartContextProvider'
 import { ColorRing } from 'react-loader-spinner'
 import toast from 'react-hot-toast'

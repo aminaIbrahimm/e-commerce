@@ -43,8 +43,8 @@ export default function CategoryDetails({ id }) {
       {subcategories.length > 0 && (
         <div className="mb-6">
           <h4 className="text-3xl font-semibold mb-10 text-green-600">{category.name} Subcategories</h4>
-          <div className="grid grid-cols-3 gap-3">
-            {subcategories.map(sub => ( <div key={sub._id} className="border p-5 border-gray-300 hover:shadow-green-300 shadow-md transition-shadow duration-300 text-2xl font-semibold text-gray-900 rounded hover:shadow-md" >
+          <div className="grid grid-cols-2 gap-3">
+            {subcategories.map(sub => ( <div key={sub._id} className="border p-5 border-gray-300 hover:shadow-green-700 shadow-md transition-shadow duration-300 text-2xl font-semibold text-gray-900 rounded hover:shadow-md" >
                 {sub.name}
               </div>
             ))}
