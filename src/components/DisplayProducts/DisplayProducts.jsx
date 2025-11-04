@@ -5,16 +5,18 @@ import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { cartContext } from '../../Context/CartContextProvider';
 import { wishlistContext } from '../../Context/WishlistContextProvider';
+import { useQuery } from '@tanstack/react-query';
 
 export default function DisplayProducts({ filterproducts }) {
+  
   const { addToWishlist, removeFromWishlist, getWishlist,wishlistIds } = useContext(wishlistContext);
   const { addToCart } = useContext(cartContext);
 
-  const [isLoading, setIsLoading] = useState(false);
-  const [products, setProducts] = useState([]);
+  // const [isLoading, setIsLoading] = useState(false);
+  // const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    getProducts();
+    // getProducts();
     getWishlist();
   }, []);
 
@@ -28,17 +30,25 @@ export default function DisplayProducts({ filterproducts }) {
   //   }
   // }
 
-  async function getProducts() {
-    setIsLoading(true);
-    try {
-      const { data } = await axios.get("https://ecommerce.routemisr.com/api/v1/products");
-      setProducts(data.data);
-    } catch (error) {
-      console.error("Failed to fetch products", error);
-    } finally {
-      setIsLoading(false);
-    }
+  // async function getProducts() {
+  //   setIsLoading(true);
+  //   try {
+  //     const { data } = await axios.get("https://ecommerce.routemisr.com/api/v1/products");
+  //     setProducts(data.data);
+  //   } catch (error) {
+  //     console.error("Failed to fetch products", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // }
+
+  async function callApi() {
+    return await axios.get("https://ecommerce.routemisr.com/api/v1/products")
   }
+  let {isLoading, data} = useQuery({
+    queryKey: ["product"],
+    queryFn: callApi,
+  });
 
   async function addCart(id) {
     const flag = await addToCart(id);
@@ -79,7 +89,7 @@ export default function DisplayProducts({ filterproducts }) {
     );
   }
 
-  const displayData = filterproducts?.length > 0 ? filterproducts : products;
+  const displayData = filterproducts?.length > 0 ? filterproducts : data?.data?.data || [];
 
   return (
     <div className="parent mx-2 gap-2 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">

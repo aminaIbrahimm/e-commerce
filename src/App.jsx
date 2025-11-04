@@ -22,7 +22,9 @@ import AllOrder from './components/AllOrder/AllOrder';
 import ForgetPassword from './components/ForgetPassword/ForgetPassword';
 import VerifyCode from './components/VerifyCode/VerifyCode';
 import ResetPassword from './components/ResetPassword/ResetPassword';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
+let client = new QueryClient()
 export default function App() {
   const router =createBrowserRouter([
     {path: '',element: <Layout />, children: [
@@ -43,14 +45,18 @@ export default function App() {
       {path: '*', element: <NotFoundPage />},
     ]}
   ])
-  return <>
-   <AuthContextProvider>
-    <CartContextProvider>
-      <WishlistContextProvider>
-        <RouterProvider router={router}/>
-        <Toaster />
-      </WishlistContextProvider>
-    </CartContextProvider>
-  </AuthContextProvider>
-  </>
+  return (
+    <>
+      <AuthContextProvider>
+        <CartContextProvider>
+          <WishlistContextProvider>
+            <QueryClientProvider client={client}>
+              <RouterProvider router={router} />
+            </QueryClientProvider>
+            <Toaster />
+          </WishlistContextProvider>
+        </CartContextProvider>
+      </AuthContextProvider>
+    </>
+  );
 }
