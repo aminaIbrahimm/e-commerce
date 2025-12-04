@@ -7,7 +7,7 @@ import googlelogo from '../../assets/Google_Play_Store_badge_EN.svg.webp'
 export default function Footer() {
   return (
     <>
-      <div className=" bg-teal-900 relative  start-0 end-0 p-8 bottom-0 w-full ">
+      <div className=" bg-white relative  start-0 end-0 p-8 bottom-0 w-full shadow-xl">
         <h2 className="capitalize text-2xl px-4 md:px-0">
           get the freshCart app
         </h2>
@@ -56,7 +56,7 @@ export default function Footer() {
             <img src={paypal} alt="paypal" className="w-15 me-1" />
             <img src={mastercard} alt="mastercard" className="w-15 me-1" />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mb-3">
             <h3 className="capitalize">get delevries with fresh cart</h3>
             <img src={applelogo} alt="" className="w-20 me-1" />
             <img src={googlelogo} alt="" className="w-20 me-1" />

@@ -16,7 +16,7 @@ export default function Navbar() {
   
   return (
     <>
-      <nav className="bg-teal-600 w-full z-20 top-0 start-0 fixed ">
+      <nav className="bg-white w-full z-20 top-0 start-0 fixed shadow-lg">
         <div className="relative max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link to="/">
             <img src={logo} alt="Logo Fresh cart" />
