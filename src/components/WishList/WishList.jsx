@@ -42,9 +42,11 @@ export default function WishList() {
         /> 
       </div>
   }
-  return (
-    <div className="bg-gray-100 m-2 md:m-15 p-7 rounded mt-25">
-      <h2 className="text-3xl font-bold text-teal-900 mb-4">My wish List</h2>
+  return (<div className='flex justify-center items-center'>
+    <div className="shadow-xl m-2 md:m-15 p-7 mx-auto rounded mt-24 md:w-6/12 ">
+      <h2 className="text-3xl font-bold text-teal-900 mb-4">
+        From Your Wish List
+      </h2>
       {wishlist?.length === 0 ? (
         <p>No items in wishlist.</p>
       ) : (
@@ -52,38 +54,39 @@ export default function WishList() {
           {wishlist?.map((product) => (
             <div
               key={product._id}
-              className="p-4 rounded shadow flex items-center justify-between"
+              className="py-1 rounded shadow flex items-center justify-between"
             >
               <img
                 src={product.imageCover}
                 alt={product.title}
-                className=" h-32 object-cover mb-2"
+                className="md:w-64 h-32 md:h-50 object-cover rounded-2xl"
               />
-              <div className="flex-1 ms-3">
-                <h3 className="text-lg">{product.title}</h3>
-                <h3 className="text-green-600">{product.price} EGP</h3>
-                <button
-                  onClick={() => {
-                    removeItems(product._id);
-                  }}
-                  className=" text-red-600 cursor-pointer font-semibold mt-1"
-                >
-                  <i className="fa-solid fa-trash me-1"></i>
-                  Remove
-                </button>
+              <div className="flex justify-around w-full items-center ml-3 md:ml-0">
+                <div>
+                  <h3 className="text-2xl font-semibold">{product.title}</h3>
+                  <h3 className="text-green-600 text-2xl">
+                    {product.price} EGP
+                  </h3>
+                </div>
+                <div className=" flex gap-2 justify-center items-center">
+                  <button
+                    onClick={() => {
+                      removeItems(product._id);
+                    }}
+                    className=" text-red-600 cursor-pointer font-semibold transition-all duration-300 hover:scale-110"
+                  >
+                    <i className="fa-solid fa-trash me-1 text-2xl"></i>
+                  </button>
+                  <button
+                    onClick={() => addCart(product._id)}
+                    className="fa fa-cart-plus cursor-pointer text-2xl text-green-600 transition-all duration-300 hover:scale-110"
+                  ></button>
+                </div>
               </div>
-              <button
-                onClick={() => {
-                  addCart(product._id);
-                }}
-                className="mx-auto p-2 mt-2  hover:bg-green-500 hover:text-white cursor-pointer transition-all duration-200 border border-green-400 rounded-md"
-              >
-                add To Cart
-              </button>
             </div>
           ))}
         </div>
       )}
     </div>
-  );
+  </div>);
 }
