@@ -1,6 +1,5 @@
 import React, {useContext, useState} from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
-import logo from '../../assets/logo.svg'
 import { authContext } from '../../Context/AuthContextProvider'
 
 export default function Navbar() {

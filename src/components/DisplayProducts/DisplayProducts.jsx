@@ -141,6 +141,7 @@ export default function DisplayProducts({ filterproducts }) {
                   className="fa fa-cart-plus cursor-pointer text-2xl text-green-600 transition-all duration-300 hover:scale-110"
                 ></button>
               </div>
+              
             </div>
             {product.priceAfterDiscount && (
               <span className="bg-red-100 text-red-800 absolute top-0 text-xs font-medium me-2 px-2.5 py-1.5 rounded-sm dark:bg-red-900 dark:text-red-300">

@@ -1,5 +1,4 @@
 import React, { useContext, useEffect, useState } from 'react'
-import Style from './Payment.module.css'
 import { useFormik } from 'formik'
 import axios from 'axios';
 import { authContext } from '../../Context/AuthContextProvider';

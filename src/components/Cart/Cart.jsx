@@ -209,7 +209,7 @@ export default function Cart() {
           </div>
         )}
         
-        <div className="border border-gray-300 p-5 rounded shadow-xl container mb-5">
+        <div className="border border-gray-300 p-5 rounded shadow-xl container mb-5 h-fit sticky top-20">
           <h3 className='text-center my-2 text-2xl font-semibold'>Order Summary</h3><hr />
           <input type='search' className='border border-gray-300 py-2 text-center rounded mt-4 w-full' placeholder='Have a promo code'/>
           <h4 className='flex justify-between pt-4'>Payable Amount <span>{totalPrice} EGP</span></h4>
@@ -221,6 +221,7 @@ export default function Cart() {
         </div>
 
       </div>
+      
     </div>
   );
 }
