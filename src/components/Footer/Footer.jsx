@@ -7,7 +7,7 @@ import googlelogo from '../../assets/Google_Play_Store_badge_EN.svg.webp'
 export default function Footer() {
   return (
     <>
-      <div className=" bg-white relative  start-0 end-0 p-8 bottom-0 w-full shadow-xl">
+      <div className=" bg-white relative  start-0 end-0 p-8 bottom-0 w-full shadow-[0_-10px_15px_-3px_rgba(0,0,0,0.1)]">
         <h2 className="capitalize text-2xl px-4 md:px-0">
           get the freshCart app
         </h2>

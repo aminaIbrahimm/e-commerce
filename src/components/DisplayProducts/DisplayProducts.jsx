@@ -92,26 +92,55 @@ export default function DisplayProducts({ filterproducts }) {
   const displayData = filterproducts?.length > 0 ? filterproducts : data?.data?.data || [];
 
   return (
-    <div className="parent mx-2 gap-2 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6">
+    <div className="parent mx-2 mb-14 gap-2 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
       {displayData.map((product) => (
-        <div key={product._id} className="group cursor-pointer relative shadow-xl p-2 overflow-hidden">
+        <div
+          key={product._id}
+          className="group cursor-pointer relative shadow-xl p-2 overflow-hidden"
+        >
           <Link to={`/ProductDetails/${product.id}/${product.category.name}`}>
             <img src={product.imageCover} alt={product.title} />
             <h3 className="text-sm text-green-700">{product.category.name}</h3>
-            <h2>{product.title.split(" ", 2).join(" ")}</h2>
-            <div className="flex justify-between">
-              {product.priceAfterDiscount ? (
-                <>
-                  <h3 className="text-red-500 line-through">{product.price} EGP</h3>
-                  <h3>{product.priceAfterDiscount} EGP</h3>
-                </>
-              ) : (
-                <h3>{product.price} EGP</h3>
-              )}
+            <div className="flex justify-between items-center">
+              <h2>{product.title.split(" ", 2).join(" ")}</h2>
               <span>
                 <i className="fa-solid fa-star text-yellow-400"></i>
                 {product.ratingsAverage}
               </span>
+            </div>
+            <div className="flex justify-between items-center relative px-2 py-5">
+              <div className="">
+                {product.priceAfterDiscount ? (
+                  <>
+                    <h3 className="text-red-500 line-through">
+                      {product.price} EGP
+                    </h3>
+                    <h3>{product.priceAfterDiscount} EGP</h3>
+                  </>
+                ) : (
+                  <h3>{product.price} EGP</h3>
+                )}
+              </div>
+              <div className='flex gap-3'>
+                <button
+                  onClick={() => toggleWishlist(product._id)}
+                  className=" transition-all duration-300 hover:scale-110 "
+                >
+                  <i
+                    className={`cursor-pointer text-2xl transition-all duration-300
+                    ${
+                      wishlistIds.includes(product._id)
+                        ? "fa fa-heart text-red-600"
+                        : "fa-regular fa-heart text-red-600"
+                    }
+                  `}
+                  ></i>
+                </button>
+                <button
+                  onClick={() => addCart(product._id)}
+                  className="fa fa-cart-plus cursor-pointer text-2xl text-green-600 transition-all duration-300 hover:scale-110"
+                ></button>
+              </div>
             </div>
             {product.priceAfterDiscount && (
               <span className="bg-red-100 text-red-800 absolute top-0 text-xs font-medium me-2 px-2.5 py-1.5 rounded-sm dark:bg-red-900 dark:text-red-300">
@@ -119,10 +148,13 @@ export default function DisplayProducts({ filterproducts }) {
               </span>
             )}
           </Link>
-          <button onClick={() => toggleWishlist(product._id)} className="absolute right-2 z-10">
-            <i className={`fa fa-heart text-2xl cursor-pointer transition-colors duration-300 ${wishlistIds.includes(product._id) ? 'text-red-600' : 'text-green-600'}`}></i>
-          </button>
-          <button onClick={() => addCart(product._id)} className="group-hover:translate-y-0 translate-y-[200%] hover:bg-green-500 hover:text-white cursor-pointer transition-all duration-200 border border-green-400 rounded-md w-full py-1.5 my-7">Add To Cart </button>
+
+          {/* <button
+            onClick={() => addCart(product._id)}
+            className="group-hover:translate-y-0 translate-y-[200%] hover:bg-green-500 hover:text-white cursor-pointer transition-all duration-200 border border-green-400 rounded-md w-full py-1.5 my-7"
+          >
+            Add To Cart{" "}
+          </button> */}
         </div>
       ))}
     </div>

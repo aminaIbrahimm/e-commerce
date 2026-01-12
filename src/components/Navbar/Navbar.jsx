@@ -18,12 +18,14 @@ export default function Navbar() {
     <>
       <nav className="bg-white w-full z-20 top-0 start-0 fixed shadow-lg">
         <div className="relative max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <Link to="/">
-            <img src={logo} alt="Logo Fresh cart" />
+          <Link to="/" className='text-2xl md:text-3xl font-semibold'>
+            {/* <img src={logo} alt="Logo Fresh cart" /> */}
+            <i class="fa-brands fa-opencart px-3 text-green-700 text-3xl"></i>
+            SooqNow
           </Link>
           <div className="flex space-x-3 md:space-x-0 rtl:space-x-reverse items-center">
-            <ul className="flex flex-col md:flex-row gap-3 ms-auto">
-              <ul className="flex gap-3">
+            <ul className="flex flex-col md:flex-row gap-2 ms-auto">
+              {/* <ul className="flex gap-3">
                 <li>
                   <i className="fa-brands fa-facebook-f cursor-pointer hover:text-green-500  "></i>
                 </li>
@@ -39,17 +41,44 @@ export default function Navbar() {
                 <li>
                   <i className="fa-brands fa-github cursor-pointer hover:text-green-500 "></i>
                 </li>
+              </ul> */}
+              <ul className='flex'>
+                <li>
+                  <Link
+                    to="/wishlist"
+                    className={`block px-2 rounded-sm ${
+                      location.pathname === "/wishlist"
+                        ? "md:text-green-700"
+                        : ""
+                    }`}
+                  >
+                    <i className="fa-solid fa-heart text-red-600 text-2xl hover:scale-110"></i>
+                  </Link>
+                </li>
+                <li>
+                  <Link
+                    to="/cart"
+                    className={`block px-2 rounded-sm ${
+                      location.pathname === "/cart"
+                        ? "md:text-green-700"
+                        : ""
+                    }`}
+                  >
+                    <i class="fa-solid fa-cart-shopping text-2xl text-green-600 hover:scale-110"></i>{" "}
+                  </Link>
+                </li>
               </ul>
-              {token ? (
-                <li className="text-end">
+
+              {token ? (<>
+                <li className="text-end hidden md:block">
                   <span
                     onClick={() => logout()}
-                    className="cursor-pointer hover:text-green-500"
+                    className="cursor-pointer hover:text-green-700 font-semibold text-xl"
                   >
                     Logout
                   </span>
                 </li>
-              ) : (
+              </>) : (
                 <>
                   <ul className="flex gap-3">
                     <li>
@@ -115,7 +144,7 @@ export default function Navbar() {
               }  w-full md:block md:w-auto md:absolute md:left-[50%] md:top-[20%]`}
             >
               {token && (
-                <ul className="absolute left-0 top-full w-full bg-teal-600 shadow-md rounded-b-lg flex flex-col md:p-0 font-medium md:flex-row md:mt-0 justify-center">
+                <ul className="absolute right-0 top-full w-5/12 bg-white shadow-md rounded-b-lg flex flex-col md:p-0 font-medium md:flex-row md:mt-0 justify-center transition duration-100">
                   <li>
                     <Link
                       to="/"
@@ -138,7 +167,7 @@ export default function Navbar() {
                       Products
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link
                       to="/wishlist"
                       className={`block py-2 px-3 rounded-sm ${
@@ -149,8 +178,8 @@ export default function Navbar() {
                     >
                       Wishlist
                     </Link>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <Link
                       to="/cart"
                       className={`block py-2 px-3 rounded-sm ${
@@ -159,7 +188,7 @@ export default function Navbar() {
                     >
                       Cart
                     </Link>
-                  </li>
+                  </li> */}
                   <li>
                     <Link
                       to="/categories"
@@ -184,6 +213,14 @@ export default function Navbar() {
                       Brand
                     </Link>
                   </li>
+                  <li className="md:hidden py-2 px-2 rounded-sm ">
+                  <span
+                    onClick={() => logout()}
+                    className="font-semibold text-xl"
+                  >
+                    Logout
+                  </span>
+                </li>
                 </ul>
               )}
             </div>

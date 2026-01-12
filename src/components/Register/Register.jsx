@@ -57,17 +57,13 @@ export default function Register() {
           {errMessage}
         </div>
       ) : null}
-      <div
-        className=" bg-cover bg-center"
-        style={{ backgroundImage: `url(${bgLogin})` }}
-      >
-        <div className="absolute inset-0 bg-black/80"></div>
+      <div>
 
         <form
           onSubmit={registerForm.handleSubmit}
-          className="relative w-[80%] m-25 md:w-1/2 mx-auto border border-green-600 rounded-2xl p-5 bg-gray-200 shadow-xl"
+          className="relative w-[80%] m-25 md:w-1/2 mx-auto rounded-2xl p-5 shadow-2xl"
         >
-          <h2 className="my-3 text-green-600 text-2xl">
+          <h2 className="my-3 text-green-700 text-2xl">
             <i className="fa-solid fa-user-plus"></i> Register Now :
           </h2>
           <div>
