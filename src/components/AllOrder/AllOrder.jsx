@@ -1,7 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { authContext } from '../../Context/AuthContextProvider'
 import axios from 'axios'
-
+import { ColorRing } from 'react-loader-spinner';
+// 6407cf6f515bdcf347c09f17
 export default function AllOrder() {
   let {idUser} = useContext(authContext)
   const [orders, setOrders] = useState([]);
@@ -25,7 +26,8 @@ export default function AllOrder() {
     }
   }, [idUser]);
 
-  return <>
+  return <div className='shadow-lg md:mx-30 p-5 my-10'>
+    <p className="text-2xl font-bold">My Orders</p>
     {isLoading ? (<div className='flex justify-center items-center'>
         <ColorRing
       visible={true}
@@ -84,5 +86,5 @@ export default function AllOrder() {
         You have no orders yet. <i className="fa-regular fa-face-frown text-red-700"></i>
         </p>)}</>
     )}
-  </>
+  </div>
 }

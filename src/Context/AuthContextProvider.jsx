@@ -8,6 +8,7 @@ export default function AuthContextProvider({children}) {
   const [userName, setUserName] = useState(localStorage.getItem("userName") || "");
   const [userEmail, setUserEmail] = useState(localStorage.getItem("userEmail") || "");
   const [phone, setPhone] = useState(localStorage.getItem("phone") || "");
+  // const []
 
   function logoutUser() {
     localStorage.removeItem("token");
@@ -24,7 +25,8 @@ export default function AuthContextProvider({children}) {
   }
 
 
-  return <authContext.Provider value={{token, setToken,setidUser,idUser,userName,userEmail,logoutUser,setUserName,setUserEmail,setPhone,phone}}>
+  return <authContext.Provider 
+    value={{token, setToken,setidUser,idUser,userName,userEmail,logoutUser,setUserName,setUserEmail,setPhone,phone}}>
     {children}
   </authContext.Provider>
 }
