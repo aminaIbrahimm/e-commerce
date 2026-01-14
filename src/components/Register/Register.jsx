@@ -10,14 +10,16 @@ import bgLogin from '../../assets/ecommerce.PNG'
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
-  let {setToken} = useContext(authContext)
+
+  const [setUserName] = useContext(authContext);
   let navigate = useNavigate()
   const [errMessage, setErrMessage] = useState(null)
   const [isLoading, setisLoading] = useState(false)
   let validationSchema = YUP.object().shape({
-    name: YUP.string().min(3,"name min 3 char").max(10,"name max 10 char").required("name is required"),
+    name: YUP.string().min(3,"name min 3 char").max(20,"name max 10 char").required("name is required"),
     email: YUP.string().email("email is in-valid").required("email is required"),
-    password: YUP.string().matches(/^\w{6,15}$/, "password min 6 to 15 letters").required("password is required"),
+    // password: YUP.string().matches(/^\w{6,15}$/, "password min 6 to 15 letters").required("password is required"),
+    password: YUP.string().min(6, "password min 6 to 15 letters").required("password is required"),
     rePassword: YUP.string().oneOf([YUP.ref("password")],"password and rePassword don't match").required("rePassword is required"),
     phone:YUP.string().matches(/^01[0125][0-9]{8}$/,"phone must be egyption number").required("phone is required"),
   })
@@ -34,10 +36,19 @@ export default function Register() {
       setisLoading(true)
       axios.post("https://ecommerce.routemisr.com/api/v1/auth/signup",values)
       .then((res)=>{
+        localStorage.setItem("token", res.data.token);
+        // localStorage.setItem("userName", values.name);
+        // localStorage.setItem("resetEmail", values.email);
+
+        setUserName(res.data.user.name)
+setUserEmail(res.data.user.email)
+localStorage.setItem("userName", res.data.user.name)
+localStorage.setItem("resetEmail", res.data.user.email)
+
+
+        // setUserName(values.name);
         console.log(res);
-        setToken(res.data.token)
-        localStorage.setItem("token",res.data.token)
-        navigate("/")
+        navigate("/");
       })
       .catch((error)=>{
         console.log(error);

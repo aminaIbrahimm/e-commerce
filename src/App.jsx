@@ -23,6 +23,7 @@ import ForgetPassword from './components/ForgetPassword/ForgetPassword';
 import VerifyCode from './components/VerifyCode/VerifyCode';
 import ResetPassword from './components/ResetPassword/ResetPassword';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import Profile from './components/Profile/Profile';
 
 let client = new QueryClient()
 export default function App() {
@@ -42,6 +43,7 @@ export default function App() {
       {path: 'forgetPassword', element: <ForgetPassword />},
       {path: 'verify-code', element: <VerifyCode />},
       {path: 'reset-password', element: <ResetPassword />},
+      {path: 'profile', element: <Profile />},
       {path: '*', element: <NotFoundPage />},
     ]}
   ])

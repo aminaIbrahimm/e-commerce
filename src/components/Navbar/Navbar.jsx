@@ -4,12 +4,12 @@ import { authContext } from '../../Context/AuthContextProvider'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  let {token,setToken} = useContext(authContext)
+  let {token,setToken,logoutUser} = useContext(authContext)
   let navigate = useNavigate("token")
   const location = useLocation();
+
   function logout() {
-    setToken(null)
-    localStorage.removeItem("token")
+    logoutUser()
     navigate("/login")
   }
   
@@ -17,9 +17,9 @@ export default function Navbar() {
     <>
       <nav className="bg-white w-full z-20 top-0 start-0 fixed shadow-lg">
         <div className="relative max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <Link to="/" className='text-2xl md:text-3xl font-semibold'>
+          <Link to="/" className="text-2xl md:text-3xl font-semibold">
             {/* <img src={logo} alt="Logo Fresh cart" /> */}
-            <i class="fa-brands fa-opencart px-3 text-green-700 text-3xl"></i>
+            <i className="fa-brands fa-opencart px-3 text-green-700 text-3xl"></i>
             SooqNow
           </Link>
           <div className="flex space-x-3 md:space-x-0 rtl:space-x-reverse items-center">
@@ -41,7 +41,7 @@ export default function Navbar() {
                   <i className="fa-brands fa-github cursor-pointer hover:text-green-500 "></i>
                 </li>
               </ul> */}
-              <ul className='flex'>
+              <ul className="flex items-center me-3">
                 <li>
                   <Link
                     to="/wishlist"
@@ -51,33 +51,48 @@ export default function Navbar() {
                         : ""
                     }`}
                   >
-                    <i className="fa-solid fa-heart text-red-600 text-2xl hover:scale-110"></i>
+                    <i className="fa-solid fa-heart text-red-600 text-xl hover:scale-110"></i>
                   </Link>
                 </li>
                 <li>
                   <Link
                     to="/cart"
-                    className={`block px-2 rounded-sm ${
-                      location.pathname === "/cart"
-                        ? "md:text-green-700"
-                        : ""
+                    className={`block px-1 rounded-sm ${
+                      location.pathname === "/cart" ? "md:text-green-700" : ""
                     }`}
                   >
-                    <i class="fa-solid fa-cart-shopping text-2xl text-green-600 hover:scale-110"></i>{" "}
+                    <i className="fa-solid fa-cart-shopping text-xl text-green-600 hover:scale-110"></i>{" "}
                   </Link>
                 </li>
               </ul>
 
-              {token ? (<>
-                <li className="text-end hidden md:block">
-                  <span
-                    onClick={() => logout()}
-                    className="cursor-pointer hover:text-green-700 font-semibold text-xl"
-                  >
-                    Logout
-                  </span>
-                </li>
-              </>) : (
+              {token ? (
+                <>
+                  <li className="text-end hidden md:block me-3">
+                    <Link
+                      to="/profile"
+                      className={`cursor-pointer  hover:text-green-700 font-semibold text-lg ${
+                        location.pathname === "/profile"
+                          ? "md:text-green-700"
+                          : ""
+                      }`}
+                    >
+                      My Account
+                      <i className="fa-solid fa-user ms-1 "></i>
+                    </Link>
+                  </li>
+                  <li className="text-end hidden md:block">
+                    <span
+                      onClick={() => logout()}
+                      className="cursor-pointer  hover:text-red-700 font-semibold text-lg"
+                    >
+                      Logout
+                      <i className="fa-solid fa-arrow-right-from-bracket ms-1"></i>
+                    </span>
+                  </li>
+                  
+                </>
+              ) : (
                 <>
                   <ul className="flex gap-3">
                     <li>
@@ -212,14 +227,33 @@ export default function Navbar() {
                       Brand
                     </Link>
                   </li>
-                  <li className="md:hidden py-2 px-2 rounded-sm ">
-                  <span
-                    onClick={() => logout()}
-                    className="font-semibold text-xl"
-                  >
-                    Logout
-                  </span>
-                </li>
+                  <li className="md:hidden py-2 px-3 rounded-sm ">
+                    <span
+                      onClick={() => logout()}
+                      className={`font-semibold  ${
+                        location.pathname === "/logout"
+                          ? "md:text-green-700"
+                          : ""
+                      }`} 
+                      
+                    >
+                      <i className="fa-solid fa-arrow-right-from-bracket me-1"></i>
+                      Logout
+                    </span>
+                  </li>
+                  <li className="md:hidden py-2 px-3 rounded-sm">
+                    <Link
+                      to="/profile"
+                      className={`font-semibold  ${
+                        location.pathname === "/profile"
+                          ? "md:text-green-700"
+                          : ""
+                      }`}
+                    >
+                      <i className="fa-solid fa-user me-1 "></i>
+                      My Profile
+                    </Link>
+                  </li>
                 </ul>
               )}
             </div>

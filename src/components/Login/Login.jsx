@@ -5,17 +5,19 @@ import { useNavigate } from 'react-router-dom';
 import * as YUP from 'yup';
 import { authContext } from '../../Context/AuthContextProvider';
 import { jwtDecode } from 'jwt-decode';
-import bgLogin from '../../assets/ecommerce.PNG'
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  let {setToken,setidUser} = useContext(authContext)
+  let { setToken, setidUser, setUserName, setUserEmail } =
+    useContext(authContext);
   let navigate = useNavigate()
   const [errMessage, setErrMessage] = useState(null)
   const [isLoading, setisLoading] = useState(false)
+
   let validationSchema = YUP.object().shape({
     email: YUP.string().email("email is in-valid").required("email is required"),
-    password: YUP.string().matches(/^\w{6,15}$/, "password min 6 to 15 letters").required("password is required"),
+    // password: YUP.string().matches(/^\w{6,15}$/, "password min 6 to 15 letters").required("password is required"),
+    password: YUP.string().min(6, "password min 6 to 15 letters").required("password is required"),
   })
   let loginForm = useFormik({
     initialValues:{
@@ -28,7 +30,14 @@ export default function Login() {
       axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin",values)
       .then((res)=>{
         console.log(res);
+
+        setUserName(res.data.user.name)
+        setUserEmail(res.data.user.email)
+        localStorage.setItem("userName", res.data.user.name)
+        localStorage.setItem("resetEmail", res.data.user.email)
+
         setToken(res.data.token)
+        // localStorage.setItem("resetEmail", values.email);
         localStorage.setItem("token",res.data.token)
         let {id} = jwtDecode(res.data.token)
         localStorage.setItem("id",id)
@@ -43,6 +52,7 @@ export default function Login() {
       })
     } 
   })
+  
   return (
     <>
       {errMessage ? (
