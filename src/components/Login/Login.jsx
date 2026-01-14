@@ -8,8 +8,7 @@ import { jwtDecode } from 'jwt-decode';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  let { setToken, setidUser, setUserName, setUserEmail } =
-    useContext(authContext);
+  let { setToken, setidUser, setUserName, setUserEmail } = useContext(authContext);
   let navigate = useNavigate()
   const [errMessage, setErrMessage] = useState(null)
   const [isLoading, setisLoading] = useState(false)
@@ -30,13 +29,14 @@ export default function Login() {
       axios.post("https://ecommerce.routemisr.com/api/v1/auth/signin",values)
       .then((res)=>{
         console.log(res);
-
+        
+        setToken(res.data.token)
+        
         setUserName(res.data.user.name)
         setUserEmail(res.data.user.email)
         localStorage.setItem("userName", res.data.user.name)
-        localStorage.setItem("resetEmail", res.data.user.email)
+        localStorage.setItem("userEmail", res.data.user.email)
 
-        setToken(res.data.token)
         // localStorage.setItem("resetEmail", values.email);
         localStorage.setItem("token",res.data.token)
         let {id} = jwtDecode(res.data.token)
@@ -46,7 +46,7 @@ export default function Login() {
       })
       .catch((error)=>{
         console.log(error);
-        setErrMessage(error.response.data.message)
+        setErrMessage(error.response?.data?.message)
       }).finally(()=>{
         setisLoading(false)
       })

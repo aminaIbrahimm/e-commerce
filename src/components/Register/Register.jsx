@@ -1,17 +1,15 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { useFormik } from 'formik'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import * as YUP from 'yup';
 import { authContext } from '../../Context/AuthContextProvider';
-import bgLogin from '../../assets/ecommerce.PNG'
-
 
 export default function Register() {
   const [showPassword, setShowPassword] = useState(false);
   const [showRePassword, setShowRePassword] = useState(false);
 
-  const [setUserName] = useContext(authContext);
+  const {setUserName,setUserEmail} = useContext(authContext);
   let navigate = useNavigate()
   const [errMessage, setErrMessage] = useState(null)
   const [isLoading, setisLoading] = useState(false)
@@ -41,13 +39,13 @@ export default function Register() {
         // localStorage.setItem("resetEmail", values.email);
 
         setUserName(res.data.user.name)
-setUserEmail(res.data.user.email)
-localStorage.setItem("userName", res.data.user.name)
-localStorage.setItem("resetEmail", res.data.user.email)
-
-
+        setUserEmail(res.data.user.email)
+        
+        localStorage.setItem("userName", res.data.user.name)
+        localStorage.setItem("userEmail", res.data.user.email)
         // setUserName(values.name);
         console.log(res);
+        
         navigate("/");
       })
       .catch((error)=>{
