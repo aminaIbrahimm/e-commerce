@@ -6,7 +6,7 @@ export default function Footer() {
       <div className=" bg-neutral-800 relative flex flex-col justify-between md:flex-row gap-5 start-0 end-0 p-8 md:px-24 bottom-0 w-full text-white">
         <div>
           <div className="mb-4">
-            <i class="fa-brands fa-opencart text-green-700 text-3xl"></i>
+            <i className="fa-brands fa-shopify text-green-700 text-4xl"></i>
             <span className="text-2xl font-semibold px-3">SooqNow</span>
           </div>
           <ul className='space-y-2'>

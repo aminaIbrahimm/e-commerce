@@ -1,10 +1,12 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useRef, useState} from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { authContext } from '../../Context/AuthContextProvider'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
-  let {token,setToken,logoutUser} = useContext(authContext)
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  let {token,logoutUser} = useContext(authContext)
+  const dropdownRef = useRef(null);
   let navigate = useNavigate("token")
   const location = useLocation();
 
@@ -18,82 +20,56 @@ export default function Navbar() {
       <nav className="bg-white w-full z-20 top-0 start-0 fixed shadow-lg">
         <div className="relative max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
           <Link to="/" className="text-2xl md:text-3xl font-semibold">
-            {/* <img src={logo} alt="Logo Fresh cart" /> */}
-            <i className="fa-brands fa-opencart px-3 text-green-700 text-3xl"></i>
+            <i className="fa-brands fa-shopify text-green-700 px-3 text-4xl"></i>
             SooqNow
           </Link>
           <div className="flex space-x-3 md:space-x-0 rtl:space-x-reverse items-center">
             <ul className="flex flex-col md:flex-row gap-2 ms-auto">
-              {/* <ul className="flex gap-3">
-                <li>
-                  <i className="fa-brands fa-facebook-f cursor-pointer hover:text-green-500  "></i>
-                </li>
-                <li>
-                  <i className="fa-brands fa-tiktok cursor-pointer hover:text-green-500 "></i>
-                </li>
-                <li>
-                  <i className="fa-brands fa-twitter cursor-pointer hover:text-green-500 "></i>
-                </li>
-                <li>
-                  <i className="fa-brands fa-yahoo cursor-pointer hover:text-green-500 "></i>
-                </li>
-                <li>
-                  <i className="fa-brands fa-github cursor-pointer hover:text-green-500 "></i>
-                </li>
-              </ul> */}
-              <ul className="flex items-center me-3">
-                <li>
-                  <Link
-                    to="/wishlist"
-                    className={`block px-2 rounded-sm ${
-                      location.pathname === "/wishlist"
-                        ? "md:text-green-700"
-                        : ""
-                    }`}
-                  >
-                    <i className="fa-solid fa-heart text-red-600 text-xl hover:scale-110"></i>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    to="/cart"
-                    className={`block px-1 rounded-sm ${
-                      location.pathname === "/cart" ? "md:text-green-700" : ""
-                    }`}
-                  >
-                    <i className="fa-solid fa-cart-shopping text-xl text-green-600 hover:scale-110"></i>{" "}
-                  </Link>
-                </li>
-              </ul>
+              {token ? (<>
+                <div className=" relative" ref={dropdownRef}>
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className="hidden md:flex items-center gap-1 font-semibold cursor-pointer hover:text-green-700"
+              >
+                <i className="fa-solid fa-user"></i>
+                Account
+                <i className="fa-solid fa-chevron-down text-sm ms-1"></i>
+              </button>
 
-              {token ? (
-                <>
-                  <li className="text-end hidden md:block me-3">
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-md z-50">
                     <Link
                       to="/profile"
-                      className={`cursor-pointer  hover:text-green-700 font-semibold text-lg ${
-                        location.pathname === "/profile"
-                          ? "md:text-green-700"
-                          : ""
-                      }`}
+                      className="block px-4 py-2 hover:text-green-700"
+                      onClick={() => setDropdownOpen(false)}
                     >
-                      My Account
-                      <i className="fa-solid fa-user ms-1 "></i>
+                      <i className="fa-regular fa-user me-2"></i> My Profile
                     </Link>
-                  </li>
-                  <li className="text-end hidden md:block">
-                    <span
-                      onClick={() => logout()}
-                      className="cursor-pointer  hover:text-red-700 font-semibold text-lg"
+                    <Link
+                      to="/cart"
+                      className="block px-4 py-2 hover:text-green-700"
+                      onClick={() => setDropdownOpen(false)}
                     >
-                      Logout
-                      <i className="fa-solid fa-arrow-right-from-bracket ms-1"></i>
-                    </span>
-                  </li>
-                  
-                </>
-              ) : (
-                <>
+                      <i className="fa-solid fa-cart-shopping me-2"></i> Cart
+                    </Link>
+                    <Link
+                      to="/wishlist"
+                      className="block px-4 py-2 hover:text-green-700"
+                      onClick={() => setDropdownOpen(false)}
+                    >
+                      <i className="fa-regular fa-heart me-2"></i> Wishlist
+                    </Link>
+                    
+                    <Link
+                      onClick={()=> {logout(); setDropdownOpen(false);}}
+                      className="block px-4 py-2 hover:text-red-600 cursor-pointer "
+                    >
+                      <i className="fa-solid fa-arrow-right-from-bracket me-2"></i> Logout
+                    </Link>
+                </div>
+                )}
+                </div>
+                </>) : (<>
                   <ul className="flex gap-3">
                     <li>
                       <Link
@@ -120,8 +96,7 @@ export default function Navbar() {
                       </Link>
                     </li>
                   </ul>
-                </>
-              )}
+                </>)}
             </ul>
             {token && (
               <button
@@ -159,12 +134,26 @@ export default function Navbar() {
             >
               {token && (
                 <ul className="absolute right-0 top-full w-5/12 bg-white shadow-md rounded-b-lg flex flex-col md:p-0 font-medium md:flex-row md:mt-0 justify-center transition duration-100">
+                  <li className="md:hidden py-2 px-3 rounded-sm">
+                    <Link
+                      to="/profile"
+                      className={`font-semibold  ${
+                        location.pathname === "/profile"
+                          ? "md:text-green-700"
+                          : ""
+                      }`}
+                      onClick={()=> setOpen(false)}
+                    >
+                      My Profile
+                    </Link>
+                  </li>
                   <li>
                     <Link
                       to="/"
                       className={`block py-2 px-3 rounded-sm ${
                         location.pathname === "/" ? "md:text-green-700" : ""
                       }`}
+                      onClick={()=> setOpen(false)}
                     >
                       Home
                     </Link>
@@ -177,11 +166,12 @@ export default function Navbar() {
                           ? "md:text-green-700"
                           : ""
                       }`}
+                      onClick={()=> setOpen(false)}
                     >
                       Products
                     </Link>
                   </li>
-                  {/* <li>
+                  <li>
                     <Link
                       to="/wishlist"
                       className={`block py-2 px-3 rounded-sm ${
@@ -189,20 +179,22 @@ export default function Navbar() {
                           ? "md:text-green-700"
                           : ""
                       }`}
+                      onClick={()=> setOpen(false)}
                     >
                       Wishlist
                     </Link>
-                  </li> */}
-                  {/* <li>
+                  </li>
+                  <li>
                     <Link
                       to="/cart"
                       className={`block py-2 px-3 rounded-sm ${
                         location.pathname === "/cart" ? "md:text-green-700" : ""
                       }`}
+                      onClick={()=> setOpen(false)}
                     >
                       Cart
                     </Link>
-                  </li> */}
+                  </li>
                   <li>
                     <Link
                       to="/categories"
@@ -211,6 +203,7 @@ export default function Navbar() {
                           ? "md:text-green-700"
                           : ""
                       }`}
+                      onClick={()=> setOpen(false)}
                     >
                       Categories
                     </Link>
@@ -223,13 +216,15 @@ export default function Navbar() {
                           ? "md:text-green-700"
                           : ""
                       }`}
+                      onClick={()=> setOpen(false)}
                     >
                       Brand
                     </Link>
                   </li>
+                  
                   <li className="md:hidden py-2 px-3 rounded-sm ">
                     <span
-                      onClick={() => logout()}
+                      onClick={() => {logout(); setOpen(false)}}
                       className={`font-semibold  ${
                         location.pathname === "/logout"
                           ? "md:text-green-700"
@@ -241,19 +236,7 @@ export default function Navbar() {
                       Logout
                     </span>
                   </li>
-                  <li className="md:hidden py-2 px-3 rounded-sm">
-                    <Link
-                      to="/profile"
-                      className={`font-semibold  ${
-                        location.pathname === "/profile"
-                          ? "md:text-green-700"
-                          : ""
-                      }`}
-                    >
-                      <i className="fa-solid fa-user me-1 "></i>
-                      My Profile
-                    </Link>
-                  </li>
+                  
                 </ul>
               )}
             </div>

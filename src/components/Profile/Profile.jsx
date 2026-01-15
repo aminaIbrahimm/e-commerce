@@ -47,7 +47,7 @@ export default function Profile() {
             <i className="fa-regular fa-envelope me-2"></i>
             {userEmail || "Not provided"}
           </p>
-          
+
         <div className='p-5 shadow-lg md:mx-80'>
           <div className='mt-2 mb-7'>
             <h3 className='text-2xl font-bold my-3'>My Address</h3>
@@ -78,7 +78,7 @@ export default function Profile() {
             </>)}
           </div>
           <div className="flex justify-center">
-          <Link to={"/updateData"} className='text-white shadow-lg bg-green-700 rounded py-2 px-5 hover:bg-green-800 transition duration-150 me-5'>Update My Account</Link>
+          {/* <Link to={"/updateData"} className='text-white shadow-lg bg-green-700 rounded py-2 px-5 hover:bg-green-800 transition duration-150 me-5'>Update My Account</Link> */}
           <Link to={"/addAddress"} className='text-white shadow-lg bg-green-700 rounded py-2 px-5 hover:bg-green-800 transition duration-150'>Add New Address</Link>
           
           </div>
