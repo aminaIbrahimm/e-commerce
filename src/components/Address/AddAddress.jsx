@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
 import { authContext } from '../../Context/AuthContextProvider';
 
-export default function Address() {
+export default function AddAddress() {
     const {token} = useContext(authContext)
     const [isLoading , setIsLoading] = useState(false)
     const navigate = useNavigate()
@@ -29,6 +29,9 @@ export default function Address() {
             axios.post("https://ecommerce.routemisr.com/api/v1/addresses",values,{headers:{token}})
             .then((res)=>{
                 const newAddress = res.data.data;
+                if(!newAddress._id){
+                  newAddress._id = Date.now().toString();
+                }
                 const currentAddresses = JSON.parse(localStorage.getItem("tempAddresses")) || [];
                 currentAddresses.push(newAddress);
                 // localStorage.setItem("userName",res.data.data.name)
