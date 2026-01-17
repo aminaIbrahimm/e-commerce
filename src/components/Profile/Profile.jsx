@@ -50,7 +50,7 @@ export default function Profile() {
           <Link to={"/updateData"} className='shadow-lg px-3 py-2 bg-green-700 hover:bg-green-800 text-white transition duration-100 rounded me-5 ms-20'>
             Update Data
           </Link>
-          <Link className='shadow-lg px-3 py-2 bg-green-700 hover:bg-green-800 text-white transition duration-100 rounded'>
+          <Link to={"/updatePassword"} className='shadow-lg px-3 py-2 bg-green-700 hover:bg-green-800 text-white transition duration-100 rounded'>
             Change Password
           </Link>
         <div className='p-5 shadow-lg md:mx-80'>
@@ -68,7 +68,7 @@ export default function Profile() {
                   /> 
             </div>
             ) : ( <>
-            {address.map((addr, index) => (<>
+            {address.map((addr, index) => (
               <div key={addr._id || index} className="shadow-lg p-3 my-2 rounded flex justify-between items-center md:mx-20">
                 <div className=''>
                 <p className='text-xl pb-3'><i className="fa-solid fa-user text-green-700"></i> {addr.name}</p>
@@ -78,7 +78,7 @@ export default function Profile() {
               <button onClick={()=> deleteAddress(addr._id)} className='cursor-pointer transition hover:scale-110 duration-100'><i className="fa-solid fa-trash-can text-red-600 text-2xl"></i></button>
               </div>
               
-            </>))}
+            ))}
             {address.length === 0 && <p className='text-center text-2xl shadow-lg p-3 bg-gray-100 rounded'>No Addresses Yet !</p>}
             </>)}
           </div>

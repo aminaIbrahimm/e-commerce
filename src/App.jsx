@@ -26,6 +26,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import Profile from './components/Profile/Profile';
 import UpdateData from './components/UpdateData/UpdateData';
 import AddAddress from './components/Address/AddAddress';
+import UpdatePassword from './components/UpdatePassword/UpdatePassword';
 
 let client = new QueryClient()
 export default function App() {
@@ -48,6 +49,7 @@ export default function App() {
       {path: 'profile', element: <Profile />},
       {path: 'addAddress', element: <AddAddress />},
       {path: 'updateData', element: <UpdateData />},
+      {path: 'updatePassword', element: <UpdatePassword />},
       {path: '*', element: <NotFoundPage />},
     ]}
   ])
