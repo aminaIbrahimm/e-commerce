@@ -43,11 +43,16 @@ export default function Profile() {
             Hello, {userName || "Guest"} !{" "}
             <i className="fa-regular fa-face-grin-beam text-green-700"></i>
           </h2>
-          <p className="text-lg ms-10">
+          <p className="text-lg ms-10 mb-3">
             <i className="fa-regular fa-envelope me-2"></i>
             {userEmail || "Not provided"}
           </p>
-
+          <Link to={"/updateData"} className='shadow-lg px-3 py-2 bg-green-700 hover:bg-green-800 text-white transition duration-100 rounded me-5 ms-20'>
+            Update Data
+          </Link>
+          <Link className='shadow-lg px-3 py-2 bg-green-700 hover:bg-green-800 text-white transition duration-100 rounded'>
+            Change Password
+          </Link>
         <div className='p-5 shadow-lg md:mx-80'>
           <div className='mt-2 mb-7'>
             <h3 className='text-2xl font-bold my-3'>My Address</h3>
