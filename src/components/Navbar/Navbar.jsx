@@ -174,7 +174,7 @@ export default function Navbar() {
                   <li>
                     <Link
                       to="/wishlist"
-                      className={`block py-2 px-3 rounded-sm ${
+                      className={`md:hidden block py-2 px-3 rounded-sm ${
                         location.pathname === "/wishlist"
                           ? "md:text-green-700"
                           : ""
@@ -187,7 +187,7 @@ export default function Navbar() {
                   <li>
                     <Link
                       to="/cart"
-                      className={`block py-2 px-3 rounded-sm ${
+                      className={`md:hidden block py-2 px-3 rounded-sm ${
                         location.pathname === "/cart" ? "md:text-green-700" : ""
                       }`}
                       onClick={()=> setOpen(false)}
