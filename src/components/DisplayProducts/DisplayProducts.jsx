@@ -149,13 +149,6 @@ export default function DisplayProducts({ filterproducts }) {
               </span>
             )}
           </Link>
-
-          {/* <button
-            onClick={() => addCart(product._id)}
-            className="group-hover:translate-y-0 translate-y-[200%] hover:bg-green-500 hover:text-white cursor-pointer transition-all duration-200 border border-green-400 rounded-md w-full py-1.5 my-7"
-          >
-            Add To Cart{" "}
-          </button> */}
         </div>
       ))}
     </div>

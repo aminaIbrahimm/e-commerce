@@ -43,9 +43,9 @@ export default function WishList() {
       </div>
   }
   return (<div className='flex justify-center items-center'>
-    <div className="shadow-xl m-2 md:m-15 p-7 mx-auto rounded mt-24 md:w-6/12 ">
+    <div className="shadow-xl m-2 md:m-15 p-7 mx-auto rounded md:mt-14 md:w-8/12 ">
       <h2 className="text-3xl font-bold text-teal-900 mb-4">
-        From Your Wish List
+        From My Wish List
       </h2>
       {wishlist?.length === 0 ? (
         <p>No items in wishlist.</p>
@@ -61,7 +61,7 @@ export default function WishList() {
                 alt={product.title}
                 className="md:w-64 h-32 md:h-50 object-cover rounded-2xl"
               />
-              <div className="flex justify-around w-full items-center ml-3 md:ml-0">
+              <div className="flex justify-around w-full items-center mx-3 md:mx-3">
                 <div>
                   <h3 className="text-2xl font-semibold">{product.title}</h3>
                   <h3 className="text-green-600 text-2xl">
