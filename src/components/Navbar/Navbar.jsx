@@ -35,7 +35,7 @@ export default function Navbar() {
                 Account
                 <i className="fa-solid fa-chevron-down text-sm ms-1"></i>
               </button>
-
+                
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-md z-50">
                     <Link
@@ -45,7 +45,7 @@ export default function Navbar() {
                     >
                       <i className="fa-regular fa-user me-2"></i> My Profile
                     </Link>
-                    <Link
+                    {/* <Link
                       to="/cart"
                       className="block px-4 py-2 hover:text-green-700"
                       onClick={() => setDropdownOpen(false)}
@@ -58,7 +58,7 @@ export default function Navbar() {
                       onClick={() => setDropdownOpen(false)}
                     >
                       <i className="fa-regular fa-heart me-2"></i> Wishlist
-                    </Link>
+                    </Link> */}
                     
                     <Link
                       onClick={()=> {logout(); setDropdownOpen(false);}}
@@ -174,7 +174,7 @@ export default function Navbar() {
                   <li>
                     <Link
                       to="/wishlist"
-                      className={`md:hidden block py-2 px-3 rounded-sm ${
+                      className={`block py-2 px-3 rounded-sm ${
                         location.pathname === "/wishlist"
                           ? "md:text-green-700"
                           : ""
@@ -187,7 +187,7 @@ export default function Navbar() {
                   <li>
                     <Link
                       to="/cart"
-                      className={`md:hidden block py-2 px-3 rounded-sm ${
+                      className={`block py-2 px-3 rounded-sm ${
                         location.pathname === "/cart" ? "md:text-green-700" : ""
                       }`}
                       onClick={()=> setOpen(false)}
@@ -195,7 +195,7 @@ export default function Navbar() {
                       Cart
                     </Link>
                   </li>
-                  <li>
+                  {/* <li>
                     <Link
                       to="/categories"
                       className={`block py-2 px-3 rounded-sm ${
@@ -207,8 +207,8 @@ export default function Navbar() {
                     >
                       Categories
                     </Link>
-                  </li>
-                  <li>
+                  </li> */}
+                  {/* <li>
                     <Link
                       to="/brand"
                       className={`block py-2 px-3 rounded-sm ${
@@ -220,7 +220,7 @@ export default function Navbar() {
                     >
                       Brand
                     </Link>
-                  </li>
+                  </li> */}
                   
                   <li className="md:hidden py-2 px-3 rounded-sm ">
                     <span
