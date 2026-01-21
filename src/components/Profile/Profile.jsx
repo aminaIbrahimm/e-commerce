@@ -4,6 +4,10 @@ import AllOrder from '../AllOrder/AllOrder';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { ColorRing } from 'react-loader-spinner';
+import { TfiEmail } from "react-icons/tfi";
+import { FaPhone, FaRegTrashAlt, FaUser } from 'react-icons/fa';
+import { FaLocationDot, FaRegFaceLaughBeam } from 'react-icons/fa6';
+
 
 export default function Profile() {
   const { userName,userEmail,token} = useContext(authContext);
@@ -39,12 +43,12 @@ export default function Profile() {
   
   return (
     <div className="mt-24 text-gray-900">
-                <h2 className="text-2xl md:text-3xl font-bold ms-5">
+                <h2 className="text-2xl md:text-3xl font-bold ms-5 flex items-center gap-1">
             Hello, {userName || "Guest"} !{" "}
-            <i className="fa-regular fa-face-grin-beam text-green-700"></i>
+            <FaRegFaceLaughBeam className='text-green-700'/>
           </h2>
-          <p className="text-lg ms-10 mb-3">
-            <i className="fa-regular fa-envelope me-2"></i>
+          <p className="text-lg ms-10 mb-3 flex items-center">
+            <TfiEmail className='me-2'/>
             {userEmail || "Not provided"}
           </p>
           <Link to={"/updateData"} className='shadow-lg px-3 py-2 bg-green-700 hover:bg-green-800 text-white transition duration-100 rounded me-5 ms-20'>
@@ -71,11 +75,15 @@ export default function Profile() {
             {address.map((addr, index) => (
               <div key={addr._id || index} className="shadow-lg p-3 my-2 rounded flex justify-between items-center md:mx-20">
                 <div className=''>
-                <p className='text-xl pb-3'><i className="fa-solid fa-user text-green-700"></i> {addr.name}</p>
-                <p className='text-xl pb-3'><i className="fa-solid fa-phone text-green-700"></i> {addr.phone}</p>
-                <p className='text-xl pb-3'><i className="fa-solid fa-location-dot text-green-700"></i> {addr.details}, {addr.city}</p>
+                <p className='text-xl pb-3 flex items-center gap-1'><FaUser className='text-green-700'/>
+                {addr.name}</p>
+                <p className='text-xl pb-3 flex items-center gap-1'><FaPhone className='text-green-700'/>
+                {addr.phone}</p>
+                <p className='text-xl pb-3 flex items-center gap-1'><FaLocationDot className='text-green-700'/>
+                {addr.details}, {addr.city}</p>
                 </div>
-              <button onClick={()=> deleteAddress(addr._id)} className='cursor-pointer transition hover:scale-110 duration-100'><i className="fa-solid fa-trash-can text-red-600 text-2xl"></i></button>
+              <button onClick={()=> deleteAddress(addr._id)} className='cursor-pointer transition hover:scale-110 duration-100'><FaRegTrashAlt className='text-red-600 text-2xl'/>
+              </button>
               </div>
               
             ))}
@@ -83,9 +91,7 @@ export default function Profile() {
             </>)}
           </div>
           <div className="flex justify-center">
-          {/* <Link to={"/updateData"} className='text-white shadow-lg bg-green-700 rounded py-2 px-5 hover:bg-green-800 transition duration-150 me-5'>Update My Account</Link> */}
           <Link to={"/addAddress"} className='text-white shadow-lg bg-green-700 rounded py-2 px-5 hover:bg-green-800 transition duration-150'>Add New Address</Link>
-          
           </div>
         </div>
       

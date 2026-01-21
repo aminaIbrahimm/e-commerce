@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import * as YUP from 'yup';
 import { authContext } from '../../Context/AuthContextProvider';
 import { jwtDecode } from 'jwt-decode';
+import { FaEye, FaEyeSlash, FaSpinner } from 'react-icons/fa';
 
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -69,9 +70,9 @@ export default function Login() {
           onSubmit={loginForm.handleSubmit}
           className="md:w-1/2 md:mx-auto mx-3  p-5 rounded-lg shadow-2xl"
         >
-          <h2 className="my-5 text-2xl text-green-700">
+          <h2 className="my-5 text-2xl font-semibold text-green-700">
             {" "}
-            <i className="fa-solid fa-user-pen"></i> Login Now :
+             Login Now :
           </h2>
           <div>
             <label
@@ -120,9 +121,9 @@ export default function Login() {
                 className="absolute top-1/2 right-3 -translate-y-1/2 cursor-pointer text-gray-500"
               >
                 {showPassword ? (
-                  <i className="fa-solid fa-eye-slash"></i>
+                  <FaEyeSlash />
                 ) : (
-                  <i className="fa-solid fa-eye"></i>
+                  <FaEye />
                 )}
               </span>
             </div>
@@ -158,7 +159,7 @@ export default function Login() {
             type="submit"
             className="cursor-pointer my-5 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
           >
-            {isLoading ? <i className="fa-solid fa-spinner"></i> : "Login"}
+            {isLoading ? <FaSpinner /> : "Login"}
           </button>
         </form>
       </div>

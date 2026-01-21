@@ -1,85 +1,31 @@
+import axios from 'axios';
 import React, { useEffect, useRef, useState } from 'react'
-import DisplayProducts from '../DisplayProducts/DisplayProducts'
-import axios from 'axios'
-import { ColorRing } from 'react-loader-spinner'
 import { FaAngleDown } from 'react-icons/fa';
 
-export default function Products() {
-  const [search, setsearch] = useState("");
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [brands, setBrands] = useState([])
-  const [selectedCategory, setSelectedCategory] = useState(null);
-  const [selectedBrand, setSelectedBrand] = useState(null);
-  const [dropdownOpen, setDropdownOpen] = useState(null);
-  const dropdownRef = useRef(null);
+ function FilterProducts({setSelectedBrand , setSelectedCategory ,selectedBrand , selectedCategory}) {
+    const [categories, setCategories] = useState([]);
+    const [brands, setBrands] = useState([])
+    const [dropdownOpen, setDropdownOpen] = useState(null);
+    const dropdownRef = useRef(null);
 
-  const filteredProducts = products.filter((product) => {
-    const matchesSearch =
-      !search ||
-      product.title.toLowerCase().includes(search.toLowerCase());
-  
-    const matchesCategory =
-      !selectedCategory || product.category?._id === selectedCategory;
-  
-    const matchesBrand =
-      !selectedBrand || product.brand?._id === selectedBrand;
-  
-    return matchesSearch && matchesCategory && matchesBrand;
-  });
-  
-  async function getCategory(){
-    const {data} = await axios.get("https://ecommerce.routemisr.com/api/v1/categories")
-    setCategories(data.data)
-  }
-  async function getBrands(){
-    const {data} = await axios.get("https://ecommerce.routemisr.com/api/v1/brands")
-    setBrands(data.data)
-  }
+    async function getCategory(){
+        const {data} = await axios.get("https://ecommerce.routemisr.com/api/v1/categories")
+        setCategories(data.data)
+      }
+    async function getBrands(){
+      const {data} = await axios.get("https://ecommerce.routemisr.com/api/v1/brands")
+      setBrands(data.data)
+    }
+    useEffect(() => {
+      getCategory()
+      getBrands()
+    }, []);
 
-  async function getProducts(){
-    setIsLoading(true)
-    let {data} = await axios.get("https://ecommerce.routemisr.com/api/v1/products")
-    console.log(data);
-    setProducts(data.data) 
-    setIsLoading(false)
-  }
-  useEffect(() => {
-    getProducts();
-    getCategory()
-    getBrands()
-  }, []);
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <ColorRing
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="color-ring-loading"
-          wrapperStyle={{}}
-          wrapperClass="color-ring-wrapper"
-          colors={["#e15b64", "#f47e60", "#f8b26a", "#abbd81", "#849b87"]}
-        />
-      </div>
-    );
-  }
 
-  console.log("product",products);
-  
+
+    console.log("filter");
   return (
-    <>
-      <input
-        type="search"
-        id="default-search"
-        value={search}
-        onChange={(e) => setsearch(e.target.value)}
-        className="block w-[80%] md:w-1/2 mx-auto p-4 ps-10 mt-30 md:mt-20 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-green-500"
-        placeholder="Search..."
-        aria-label="Search products"
-      />
-      <div className='flex justify-end items-center gap-5 my-5 mx-5'>
+    <div className='flex justify-end items-center gap-5 my-5 mx-5'>
         <div className="relative" ref={dropdownRef}>
           <button
             onClick={() => setDropdownOpen(dropdownOpen === "category" ? null : "category")}
@@ -142,8 +88,7 @@ export default function Products() {
             )}
         </div>
       </div>
-      <DisplayProducts filterproducts={filteredProducts} />
-    </>
-  );
-} 
+  )
+}
 
+export default React.memo (FilterProducts)

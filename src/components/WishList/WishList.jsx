@@ -3,6 +3,7 @@ import { wishlistContext } from '../../Context/WishlistContextProvider';
 import { ColorRing } from 'react-loader-spinner';
 import { cartContext } from '../../Context/CartContextProvider';
 import toast from 'react-hot-toast';
+import { FaTrashAlt } from 'react-icons/fa';
 
 export default function WishList() {
   const { wishlist, isLoading, getWishlist, removeFromWishlist } = useContext(wishlistContext);
@@ -59,6 +60,7 @@ export default function WishList() {
               <img
                 src={product.imageCover}
                 alt={product.title}
+                loading='lazy' width={300} height={300}
                 className="md:w-64 h-32 md:h-50 object-cover rounded-2xl"
               />
               <div className="flex justify-around w-full items-center mx-3 md:mx-3">
@@ -75,7 +77,7 @@ export default function WishList() {
                     }}
                     className=" text-red-600 cursor-pointer font-semibold transition-all duration-300 hover:scale-110"
                   >
-                    <i className="fa-solid fa-trash me-1 text-2xl"></i>
+                    <FaTrashAlt className='me-1 text-2xl'/>
                   </button>
                   <button
                     onClick={() => addCart(product._id)}

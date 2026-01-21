@@ -1,14 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { cartContext } from '../../Context/CartContextProvider'
 import { ColorRing } from 'react-loader-spinner'
 import toast from 'react-hot-toast'
-import axios from 'axios'
 import { Link } from 'react-router-dom'
 // import { *asYUP } from 'yup';
 export default function Cart() {
   
 
-  let {getCart,totalPrice,products, numOfCart,isLoading,removeItem,updateQuantityProduct,deleteCart} = useContext(cartContext)
+  let {getCart,totalPrice,products,isLoading,removeItem,updateQuantityProduct,deleteCart} = useContext(cartContext)
   useEffect(()=>{
     getCart()
   },[])
@@ -90,6 +89,7 @@ export default function Cart() {
                       <img
                         src={product.product.imageCover}
                         className="w-12 md:w-32 max-w-full max-h-full"
+                        loading='lazy' width={300} height={300}
                         alt={product.product.title}
                       />
                     </td>
@@ -202,10 +202,10 @@ export default function Cart() {
           </div>
         ) : (
           <div
-            class="text-center w-full p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
+            className="text-center w-full p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400"
             role="alert"
           >
-            <span class="font-medium">Not Product Found</span>
+            <span className="font-medium">Not Product Found</span>
           </div>
         )}
         

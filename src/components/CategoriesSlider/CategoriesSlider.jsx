@@ -30,8 +30,8 @@ export default function CategoriesSlider() {
   };
   return <>
   <Slider {...settings} className='my-8 '>
-      {categories?.map((category)=> <div>
-        <img src={category.image} className='w-100 h-[200px] object-cover' alt="" />
+      {categories?.map((category)=> <div key={category._id}>
+        <img src={category.image}  className='w-100 h-[200px] object-cover' alt={category.name} loading='lazy' width={300} height={300}/>
       </div>)}
     </Slider>
   {/* <Slider {...settings} className='my-8 '>

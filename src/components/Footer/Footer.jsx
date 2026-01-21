@@ -1,13 +1,14 @@
 import React from 'react'
+import { FaShopify } from 'react-icons/fa';
 
 export default function Footer() {
   return (
     <>
       <div className=" bg-neutral-800 relative flex flex-col justify-between md:flex-row gap-5 start-0 end-0 p-8 md:px-24 bottom-0 w-full text-white">
         <div>
-          <div className="mb-4">
-            <i className="fa-brands fa-shopify text-green-700 text-4xl"></i>
-            <span className="text-2xl font-semibold px-3">SooqNow</span>
+          <div className="mb-4 flex items-center gap-1">
+            <FaShopify className='text-green-700 text-4xl'/>
+            <span className="text-2xl font-semibold">SooqNow</span>
           </div>
           <ul className='space-y-2'>
             <li><p>Address : Cairo, Egypt</p></li>

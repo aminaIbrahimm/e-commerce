@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { authContext } from '../../Context/AuthContextProvider'
 import axios from 'axios'
 import { ColorRing } from 'react-loader-spinner';
+import { FaRegSadTear } from 'react-icons/fa';
 // 6407cf6f515bdcf347c09f17
 export default function AllOrder() {
   let {idUser} = useContext(authContext)
@@ -59,6 +60,7 @@ export default function AllOrder() {
                 <img
                   src={order.cartItems[0].product.imageCover}
                   className="w-50 rounded"
+                  loading='lazy' width={300} height={300}
                   alt={order.cartItems[0].product.title}
                 />
               </td>
@@ -82,8 +84,8 @@ export default function AllOrder() {
           </tbody>
         </table>
       </div>
-      ):(<p className='text-center text-2xl m-5 mb-10 bg-neutral-100 p-5 rounded shadow-lg'>
-        You have no orders yet. <i className="fa-regular fa-face-frown text-red-700"></i>
+      ):(<p className=' text-2xl m-5 mb-10 bg-neutral-100 p-5 rounded shadow-lg flex items-center gap-1 justify-center'>
+        You have no orders yet. <FaRegSadTear className='text-red-700'/>
         </p>)}</>
     )}
   </div>

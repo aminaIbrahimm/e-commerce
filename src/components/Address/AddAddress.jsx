@@ -4,6 +4,7 @@ import React, { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import * as Yup from "yup";
 import { authContext } from '../../Context/AuthContextProvider';
+import { FaSpinner } from 'react-icons/fa';
 
 export default function AddAddress() {
     const {token} = useContext(authContext)
@@ -76,7 +77,7 @@ export default function AddAddress() {
             type="submit"
             className="cursor-pointer my-2 focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-0 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800"
           >
-            {isLoading ? <i className="fa-solid fa-spinner"></i> : "Add New Address"}
+            {isLoading ? <FaSpinner /> : "Add New Address"}
           </button>
         </form>
     </div>

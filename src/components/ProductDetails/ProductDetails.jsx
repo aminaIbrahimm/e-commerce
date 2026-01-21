@@ -5,6 +5,7 @@ import { ColorRing } from 'react-loader-spinner'
 import { wishlistContext } from '../../Context/WishlistContextProvider';
 import { cartContext } from '../../Context/CartContextProvider';
 import toast from 'react-hot-toast';
+import { FaCartPlus, FaHeart, FaRegHeart, FaStar } from 'react-icons/fa';
 
 export default function ProductDetails() {
   const { addToWishlist, removeFromWishlist, getWishlist,wishlistIds } = useContext(wishlistContext);
@@ -82,14 +83,15 @@ export default function ProductDetails() {
           <img
             src={product?.imageCover}
             className="w-72"
+            loading='lazy' width={300} height={300}
             alt={product?.title}
           />
         </div>
         <div className="bg-neutral-200 rounded-2xl shadow-2xl p-5 w-84">
           <div className="flex justify-between">
             <h2 className="mb-1">{product?.title}</h2>
-            <span>
-              <i className="fa-solid fa-star text-yellow-400"></i>
+            <span className='flex items-center gap-1'>
+              <FaStar className='text-yellow-400'/>
               {product?.ratingsAverage}
             </span>
           </div>
@@ -106,25 +108,20 @@ export default function ProductDetails() {
             ) : (
               <h3>{product?.price} EGP</h3>
             )}
-            <div className="flex gap-3">
+            <div className="flex gap-2">
               <button
                 onClick={() => toggleWishlist(product._id)}
-                className=" transition-all duration-300 hover:scale-110 "
+                className=" transition-all duration-300 hover:scale-110 cursor-pointer"
               >
-                <i
-                  className={`cursor-pointer text-2xl transition-all duration-300
-                    ${
-                      wishlistIds.includes(product._id)
-                        ? "fa fa-heart text-red-600"
-                        : "fa-regular fa-heart text-red-600"
-                    }
-                  `}
-                ></i>
+                {wishlistIds.includes(product._id)
+                    ? (<FaHeart className='text-red-700 text-2xl'/>)
+                    : (<FaRegHeart className='text-red-700 text-2xl'/>)
+                  }
               </button>
               <button
                 onClick={() => addCart(product._id)}
-                className="fa fa-cart-plus cursor-pointer text-2xl text-green-600 transition-all duration-300 hover:scale-110"
-              ></button>
+                className="cursor-pointer text-2xl text-green-600 transition-all duration-300 hover:scale-110"
+              ><FaCartPlus /></button>
             </div>
           </div>
         </div>
@@ -144,12 +141,12 @@ export default function ProductDetails() {
               <div className="flex justify-between items-center">
                 <h2>{product.title.split(" ", 2).join(" ")}</h2>
                 <span>
-                  <i className="fa-solid fa-star text-yellow-400"></i>
+                  <FaStar className='text-yellow-400'/>
                   {product.ratingsAverage}
                 </span>
               </div>
               <div className="flex justify-between items-center relative py-2">
-                <div className="">
+                <div>
                   {product.priceAfterDiscount ? (
                     <>
                       <h3 className="text-red-500 line-through">
@@ -164,22 +161,17 @@ export default function ProductDetails() {
                 <div className="flex gap-3">
                   <button
                     onClick={() => toggleWishlist(product._id)}
-                    className=" transition-all duration-300 hover:scale-110 "
+                    className=" transition-all duration-300 hover:scale-110 cursor-pointer"
                   >
-                    <i
-                      className={`cursor-pointer text-2xl transition-all duration-300
-                    ${
-                      wishlistIds.includes(product._id)
-                        ? "fa fa-heart text-red-600"
-                        : "fa-regular fa-heart text-red-600"
-                    }
-                  `}
-                    ></i>
+                    {wishlistIds.includes(product._id)
+                    ? (<FaHeart className='text-red-700 text-2xl '/>)
+                    : (<FaRegHeart className='text-red-700 text-2xl'/>)
+                  }
                   </button>
                   <button
                     onClick={() => addCart(product._id)}
-                    className="fa fa-cart-plus cursor-pointer text-2xl text-green-600 transition-all duration-300 hover:scale-110"
-                  ></button>
+                    className="cursor-pointer text-2xl text-green-600 transition-all duration-300 hover:scale-110"
+                  ><FaCartPlus /></button>
                 </div>
               </div>
               {product.priceAfterDiscount ? (
@@ -188,9 +180,6 @@ export default function ProductDetails() {
                 </span>
               ) : null}
             </Link>
-            {/* <button className="group-hover:translate-y-0 translate-y-[200%] hover:bg-green-500 hover:text-white cursor-pointer transition-all duration-200 border border-green-400 rounded-md w-full py-1.5 my-5">
-              Add To Cart
-            </button> */}
           </div>
         ))}
       </div>

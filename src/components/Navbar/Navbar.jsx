@@ -1,6 +1,9 @@
 import React, {useContext, useRef, useState} from 'react'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { authContext } from '../../Context/AuthContextProvider'
+import { MdOutlineLogout } from "react-icons/md";
+import { FaAngleDown, FaRegUser, FaShopify, FaUserCircle } from 'react-icons/fa';
+
 
 export default function Navbar() {
   const [open, setOpen] = useState(false);
@@ -18,9 +21,9 @@ export default function Navbar() {
   return (
     <>
       <nav className="bg-white w-full z-20 top-0 start-0 fixed shadow-lg">
-        <div className="relative max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4">
-          <Link to="/" className="text-2xl md:text-3xl font-semibold">
-            <i className="fa-brands fa-shopify text-green-700 px-3 text-4xl"></i>
+        <div className="relative max-w-screen-xl flex flex-wrap items-center justify-between mx-auto px-4">
+          <Link to="/" className="text-2xl md:text-3xl font-semibold flex items-center">
+            <FaShopify className='text-green-700 px-3 text-6xl'/>
             SooqNow
           </Link>
           <div className="flex space-x-3 md:space-x-0 rtl:space-x-reverse items-center">
@@ -31,19 +34,21 @@ export default function Navbar() {
                 onClick={() => setDropdownOpen(!dropdownOpen)}
                 className="hidden md:flex items-center gap-1 font-semibold cursor-pointer hover:text-green-700"
               >
-                <i className="fa-solid fa-user"></i>
+                <FaUserCircle className='text-xl'/>
                 Account
-                <i className="fa-solid fa-chevron-down text-sm ms-1"></i>
+                <FaAngleDown className='text-sm ms-1'/>
+
               </button>
                 
               {dropdownOpen && (
                 <div className="absolute right-0 mt-2 w-48 bg-white shadow-md rounded-md z-50">
                     <Link
                       to="/profile"
-                      className="block px-4 py-2 hover:text-green-700"
+                      className="flex items-center px-4 py-2 hover:text-green-700"
                       onClick={() => setDropdownOpen(false)}
                     >
-                      <i className="fa-regular fa-user me-2"></i> My Profile
+                      <FaRegUser className='me-2' />
+                       My Profile
                     </Link>
                     {/* <Link
                       to="/cart"
@@ -62,9 +67,9 @@ export default function Navbar() {
                     
                     <Link
                       onClick={()=> {logout(); setDropdownOpen(false);}}
-                      className="block px-4 py-2 hover:text-red-600 cursor-pointer "
+                      className=" px-4 py-2 flex items-center hover:text-red-600 cursor-pointer "
                     >
-                      <i className="fa-solid fa-arrow-right-from-bracket me-2"></i> Logout
+                      <MdOutlineLogout className='me-1'/> Logout
                     </Link>
                 </div>
                 )}
@@ -225,14 +230,14 @@ export default function Navbar() {
                   <li className="md:hidden py-2 px-3 rounded-sm ">
                     <span
                       onClick={() => {logout(); setOpen(false)}}
-                      className={`font-semibold  ${
+                      className={`font-semibold flex items-center  ${
                         location.pathname === "/logout"
                           ? "md:text-green-700"
                           : ""
                       }`} 
                       
                     >
-                      <i className="fa-solid fa-arrow-right-from-bracket me-1"></i>
+                      <MdOutlineLogout className='me-1'/>
                       Logout
                     </span>
                   </li>

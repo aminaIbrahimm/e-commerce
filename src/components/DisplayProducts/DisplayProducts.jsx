@@ -6,47 +6,25 @@ import toast from 'react-hot-toast';
 import { cartContext } from '../../Context/CartContextProvider';
 import { wishlistContext } from '../../Context/WishlistContextProvider';
 import { useQuery } from '@tanstack/react-query';
+import { FaHeart} from "react-icons/fa";
+import { FaCartPlus, FaRegHeart,FaStar } from "react-icons/fa6";
 
 export default function DisplayProducts({ filterproducts }) {
   
   const { addToWishlist, removeFromWishlist, getWishlist,wishlistIds } = useContext(wishlistContext);
   const { addToCart } = useContext(cartContext);
-
-  // const [isLoading, setIsLoading] = useState(false);
   // const [products, setProducts] = useState([]);
 
+  const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
-    // getProducts();
     getWishlist();
   }, []);
 
-  // async function fetchWishlistIds() {
-  //   try {
-  //     const res = await getWishlist();
-  //     const ids = res?.data?.map(item => item._id) || [];
-  //     setWishlistIds(ids);
-  //   } catch (error) {
-  //     console.error("Failed to load wishlist", error);
-  //   }
-  // }
-
-  // async function getProducts() {
-  //   setIsLoading(true);
-  //   try {
-  //     const { data } = await axios.get("https://ecommerce.routemisr.com/api/v1/products");
-  //     setProducts(data.data);
-  //   } catch (error) {
-  //     console.error("Failed to fetch products", error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // }
-
   async function callApi() {
-    return await axios.get("https://ecommerce.routemisr.com/api/v1/products")
+    return await axios.get(`https://ecommerce.routemisr.com/api/v1/products?page=${currentPage}&limit=40`)
   }
   let {isLoading, data} = useQuery({
-    queryKey: ["product"],
+    queryKey: ["product" , currentPage],
     queryFn: callApi,
   });
 
@@ -90,7 +68,10 @@ export default function DisplayProducts({ filterproducts }) {
   }
 
   const displayData = filterproducts?.length > 0 ? filterproducts : data?.data?.data || [];
+  
 
+  console.log("Display");
+  
   return (
     <div className="parent mx-2 mb-14 gap-2 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
       {displayData.map((product) => (
@@ -99,17 +80,23 @@ export default function DisplayProducts({ filterproducts }) {
           className="group cursor-pointer relative shadow-xl p-2 overflow-hidden"
         >
           <Link to={`/ProductDetails/${product.id}/${product.category.name}`}>
-            <img src={product.imageCover} alt={product.title} />
+
+            <img loading='lazy' width={300} height={300} src={product.imageCover} srcSet={`
+              ${product.imageCover}?w=300 300w,
+              ${product.imageCover}?w=600 600w,
+              ${product.imageCover}?w=900 900w
+            `}
+            sizes="(max-width: 768px) 50vw, 187px" alt={product.title} className='object-cover w-full h-72'/>
             <h3 className="text-sm text-green-700">{product.category.name}</h3>
             <div className="flex justify-between items-center">
               <h2>{product.title.split(" ", 2).join(" ")}</h2>
-              <span>
-                <i className="fa-solid fa-star text-yellow-400"></i>
+              <span className='flex items-center gap-1'>
+                <FaStar className='text-yellow-400'/>
                 {product.ratingsAverage}
               </span>
             </div>
             <div className="flex justify-between items-center relative px-2 py-5">
-              <div className="">
+              <div>
                 {product.priceAfterDiscount ? (
                   <>
                     <h3 className="text-red-500 line-through">
@@ -126,20 +113,15 @@ export default function DisplayProducts({ filterproducts }) {
                   onClick={() => toggleWishlist(product._id)}
                   className=" transition-all duration-300 hover:scale-110 "
                 >
-                  <i
-                    className={`cursor-pointer text-2xl transition-all duration-300
-                    ${
-                      wishlistIds.includes(product._id)
-                        ? "fa fa-heart text-red-600"
-                        : "fa-regular fa-heart text-red-600"
-                    }
-                  `}
-                  ></i>
+                  {wishlistIds.includes(product._id)
+                    ? (<FaHeart className='text-red-700 text-2xl'/>)
+                    : (<FaRegHeart className='text-red-700 text-2xl'/>)
+                  }
                 </button>
                 <button
                   onClick={() => addCart(product._id)}
-                  className="fa fa-cart-plus cursor-pointer text-2xl text-green-600 transition-all duration-300 hover:scale-110"
-                ></button>
+                  className=" cursor-pointer text-2xl text-green-600 transition-all duration-300 hover:scale-110"
+                ><FaCartPlus /></button>
               </div>
               
             </div>

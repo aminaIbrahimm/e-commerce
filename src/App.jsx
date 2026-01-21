@@ -1,5 +1,4 @@
 import React from 'react'
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from './components/Layout/Layout'
 import Home from './components/Home/Home'
@@ -27,6 +26,7 @@ import Profile from './components/Profile/Profile';
 import UpdateData from './components/UpdateData/UpdateData';
 import AddAddress from './components/Address/AddAddress';
 import UpdatePassword from './components/UpdatePassword/UpdatePassword';
+import FilterProducts from './components/FilterProducts/FilterProducts'
 
 let client = new QueryClient()
 export default function App() {
@@ -50,6 +50,7 @@ export default function App() {
       {path: 'addAddress', element: <AddAddress />},
       {path: 'updateData', element: <UpdateData />},
       {path: 'updatePassword', element: <UpdatePassword />},
+      {path: 'filterProducts', element: <FilterProducts />},
       {path: '*', element: <NotFoundPage />},
     ]}
   ])
