@@ -13,7 +13,6 @@ export default function DisplayProducts({ filterproducts }) {
   
   const { addToWishlist, removeFromWishlist, getWishlist,wishlistIds } = useContext(wishlistContext);
   const { addToCart } = useContext(cartContext);
-  // const [products, setProducts] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {

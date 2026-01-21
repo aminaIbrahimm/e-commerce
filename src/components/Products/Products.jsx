@@ -1,19 +1,44 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useRef, useState } from 'react'
 import DisplayProducts from '../DisplayProducts/DisplayProducts'
 import axios from 'axios'
 import { ColorRing } from 'react-loader-spinner'
 import { FaAngleDown } from 'react-icons/fa';
+import { useQuery } from '@tanstack/react-query';
 
 export default function Products() {
   const [search, setsearch] = useState("");
-  const [products, setProducts] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
-  const [categories, setCategories] = useState([]);
-  const [brands, setBrands] = useState([])
   const [selectedCategory, setSelectedCategory] = useState(null);
   const [selectedBrand, setSelectedBrand] = useState(null);
   const [dropdownOpen, setDropdownOpen] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
   const dropdownRef = useRef(null);
+  
+  async function getCategory(){
+    return await axios.get("https://ecommerce.routemisr.com/api/v1/categories")
+  }
+  async function getBrands(){
+    return await axios.get("https://ecommerce.routemisr.com/api/v1/brands")
+  }
+
+  async function callApi() {
+    return await axios.get(`https://ecommerce.routemisr.com/api/v1/products?page=${currentPage}&limit=40`)
+  }
+  let {data: productsRes, isLoading: productsLoading }= useQuery({
+    queryKey: ["product"],
+    queryFn: callApi
+  })
+  let {data: categoriesRes }= useQuery({
+    queryKey: ["category"],
+    queryFn: getCategory
+  })
+  let {data: brandsRes}= useQuery({
+    queryKey: ["product"],
+    queryFn: getBrands
+  })
+
+  const products = productsRes?.data?.data || [];
+  const categories = categoriesRes?.data?.data || [];
+  const brands = brandsRes?.data?.data || [];
 
   const filteredProducts = products.filter((product) => {
     const matchesSearch =
@@ -28,29 +53,7 @@ export default function Products() {
   
     return matchesSearch && matchesCategory && matchesBrand;
   });
-  
-  async function getCategory(){
-    const {data} = await axios.get("https://ecommerce.routemisr.com/api/v1/categories")
-    setCategories(data.data)
-  }
-  async function getBrands(){
-    const {data} = await axios.get("https://ecommerce.routemisr.com/api/v1/brands")
-    setBrands(data.data)
-  }
-
-  async function getProducts(){
-    setIsLoading(true)
-    let {data} = await axios.get("https://ecommerce.routemisr.com/api/v1/products")
-    console.log(data);
-    setProducts(data.data) 
-    setIsLoading(false)
-  }
-  useEffect(() => {
-    getProducts();
-    getCategory()
-    getBrands()
-  }, []);
-  if (isLoading) {
+  if (productsLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <ColorRing
