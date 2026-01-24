@@ -8,7 +8,6 @@ import Login from './components/Login/Login'
 import Register from './components/Register/Register'
 import NotFoundPage from './components/NotFoundPage/NotFoundPage'
 import Brands from './components/Brands/Brands';
-import Categories from './components/Categories/Categories';
 import AuthContextProvider from './Context/AuthContextProvider';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import ProductDetails from './components/ProductDetails/ProductDetails';
@@ -26,7 +25,6 @@ import Profile from './components/Profile/Profile';
 import UpdateData from './components/UpdateData/UpdateData';
 import AddAddress from './components/Address/AddAddress';
 import UpdatePassword from './components/UpdatePassword/UpdatePassword';
-import FilterProducts from './components/FilterProducts/FilterProducts'
 
 let client = new QueryClient()
 export default function App() {
@@ -40,7 +38,6 @@ export default function App() {
       {path: 'wishlist', element: <ProtectedRoute><WishList /></ProtectedRoute>},
       {path: 'payment', element: <ProtectedRoute><Payment /></ProtectedRoute>},
       {path: 'allOrder', element: <ProtectedRoute><AllOrder /></ProtectedRoute>},
-      {path: 'categories', element:<ProtectedRoute><Categories /></ProtectedRoute>},
       {path: 'login', element: <Login />},
       {path: 'register', element: <Register />},
       {path: 'forgetPassword', element: <ForgetPassword />},
@@ -50,7 +47,6 @@ export default function App() {
       {path: 'addAddress', element: <AddAddress />},
       {path: 'updateData', element: <UpdateData />},
       {path: 'updatePassword', element: <UpdatePassword />},
-      {path: 'filterProducts', element: <FilterProducts />},
       {path: '*', element: <NotFoundPage />},
     ]}
   ])

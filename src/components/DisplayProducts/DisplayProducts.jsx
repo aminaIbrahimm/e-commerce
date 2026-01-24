@@ -1,31 +1,41 @@
-import React, { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useContext, useEffect} from 'react';
 import { ColorRing } from 'react-loader-spinner';
 import { Link } from 'react-router-dom';
 import toast from 'react-hot-toast';
 import { cartContext } from '../../Context/CartContextProvider';
 import { wishlistContext } from '../../Context/WishlistContextProvider';
-import { useQuery } from '@tanstack/react-query';
 import { FaHeart} from "react-icons/fa";
 import { FaCartPlus, FaRegHeart,FaStar } from "react-icons/fa6";
 
-export default function DisplayProducts({ filterproducts }) {
-  
-  const { addToWishlist, removeFromWishlist, getWishlist,wishlistIds } = useContext(wishlistContext);
-  const { addToCart } = useContext(cartContext);
+export default function DisplayProducts({ products = [] }) {
+  const {wishlistIds, removeFromWishlist, getWishlist, addToWishlist} = useContext(wishlistContext)
+  const {addToCart} = useContext(cartContext)
 
-  const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
-    getWishlist();
+      getWishlist();
   }, []);
 
-  async function callApi() {
-    return await axios.get(`https://ecommerce.routemisr.com/api/v1/products?page=${currentPage}&limit=40`)
+  if (!products.length) {
+    return (
+      <p className="text-center text-gray-500 mt-10">
+        No products found
+      </p>
+    );
   }
-  let {isLoading, data} = useQuery({
-    queryKey: ["product" , currentPage],
-    queryFn: callApi,
-  });
+
+  // const [currentPage, setCurrentPage] = useState(1);
+  
+  // useEffect(() => {
+  //   setCurrentPage(1);
+  // }, [filterproducts]);
+
+  // async function callApi() {
+  //   return await axios.get(`https://ecommerce.routemisr.com/api/v1/products?page=${currentPage}&limit=20`)
+  // }
+  // let {isLoading, data} = useQuery({
+  //   queryKey: ["product" , currentPage],
+  //   queryFn: callApi,
+  // });
 
   async function addCart(id) {
     const flag = await addToCart(id);
@@ -52,28 +62,25 @@ export default function DisplayProducts({ filterproducts }) {
     }
   }
 
-  if (isLoading) {
-    return (
-      <div className="flex justify-center items-center h-screen">
-        <ColorRing
-          visible={true}
-          height="80"
-          width="80"
-          ariaLabel="color-ring-loading"
-          colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
-        />
-      </div>
-    );
-  }
-
-  const displayData = filterproducts?.length > 0 ? filterproducts : data?.data?.data || [];
+  // if (isLoading) {
+  //   return (
+  //     <div className="flex justify-center items-center h-screen">
+  //       <ColorRing
+  //         visible={true}
+  //         height="80"
+  //         width="80"
+  //         ariaLabel="color-ring-loading"
+  //         colors={['#e15b64', '#f47e60', '#f8b26a', '#abbd81', '#849b87']}
+  //       />
+  //     </div>
+  //   );
+  // }
+  // const displayData = filterproducts?.length > 0 ? filterproducts : data?.data?.data || [];
+  // const totalPages = data?.data?.metadata?.numberOfPages;
   
-
-  console.log("Display");
-  
-  return (
+  return (<>
     <div className="parent mx-2 mb-14 gap-2 grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 ">
-      {displayData.map((product) => (
+      {products.map((product) => (
         <div
           key={product._id}
           className="group cursor-pointer relative shadow-xl p-2 overflow-hidden"
@@ -94,7 +101,14 @@ export default function DisplayProducts({ filterproducts }) {
                 {product.ratingsAverage}
               </span>
             </div>
-            <div className="flex justify-between items-center relative px-2 py-5">
+            
+            {product.priceAfterDiscount && (
+              <span className="bg-red-100 text-red-800 absolute top-0 text-xs font-medium me-2 px-2.5 py-1.5 rounded-sm dark:bg-red-900 dark:text-red-300">
+                Sale
+              </span>
+            )}
+          </Link>
+          <div className="flex justify-between items-center relative px-2 py-5">
               <div>
                 {product.priceAfterDiscount ? (
                   <>
@@ -110,28 +124,46 @@ export default function DisplayProducts({ filterproducts }) {
               <div className='flex gap-3'>
                 <button
                   onClick={() => toggleWishlist(product._id)}
-                  className=" transition-all duration-300 hover:scale-110 "
+                  className="cursor-pointer text-red-700 text-2xl transition-all duration-300 hover:scale-110 "
                 >
                   {wishlistIds.includes(product._id)
-                    ? (<FaHeart className='text-red-700 text-2xl'/>)
-                    : (<FaRegHeart className='text-red-700 text-2xl'/>)
+                    ? (<FaHeart />)
+                    : (<FaRegHeart />)
                   }
                 </button>
                 <button
                   onClick={() => addCart(product._id)}
-                  className=" cursor-pointer text-2xl text-green-600 transition-all duration-300 hover:scale-110"
+                  className="cursor-pointer text-2xl text-green-600 transition-all duration-300 hover:scale-110"
                 ><FaCartPlus /></button>
               </div>
               
             </div>
-            {product.priceAfterDiscount && (
-              <span className="bg-red-100 text-red-800 absolute top-0 text-xs font-medium me-2 px-2.5 py-1.5 rounded-sm dark:bg-red-900 dark:text-red-300">
-                Sale
-              </span>
-            )}
-          </Link>
         </div>
-      ))}
+       ))} 
     </div>
-  );
+    {/* {!filterproducts && (
+      <div className="flex justify-center items-center gap-4 mt-8 mb-8">
+        <button
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage(prev => prev - 1)}
+          className='cursor-pointer bg-neutral-300 rounded py-1 px-3'
+        >
+          Previous
+        </button>
+
+        <span>
+          Page {currentPage} of {totalPages}
+        </span>
+
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage(prev => prev + 1)}
+          className='cursor-pointer bg-neutral-300 rounded py-1 px-3'
+        >
+          Next
+        </button>
+      </div>
+    )} */}
+
+  </>);
 }

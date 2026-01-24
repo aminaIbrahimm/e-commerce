@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import DisplayProducts from '../DisplayProducts/DisplayProducts'
 import axios from 'axios'
 import { ColorRing } from 'react-loader-spinner'
@@ -21,38 +21,52 @@ export default function Products() {
   }
 
   async function callApi() {
-    return await axios.get(`https://ecommerce.routemisr.com/api/v1/products?page=${currentPage}&limit=40`)
+    return await axios.get(`https://ecommerce.routemisr.com/api/v1/products`, {
+      params: {
+        page: currentPage,
+        limit: 20,
+        keyword: search || undefined,
+        category: selectedCategory || undefined,
+        brand: selectedBrand || undefined,
+      }
+    })
   }
   let {data: productsRes, isLoading: productsLoading }= useQuery({
-    queryKey: ["product"],
-    queryFn: callApi
+    queryKey: ["product" , currentPage, search, selectedCategory, selectedBrand],
+    queryFn: callApi,
+    keepPreviousData: true
   })
   let {data: categoriesRes }= useQuery({
     queryKey: ["category"],
     queryFn: getCategory
   })
   let {data: brandsRes}= useQuery({
-    queryKey: ["product"],
+    queryKey: ["brand"],
     queryFn: getBrands
   })
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [search, selectedCategory, selectedBrand]);
+  
 
   const products = productsRes?.data?.data || [];
   const categories = categoriesRes?.data?.data || [];
   const brands = brandsRes?.data?.data || [];
+  //   const matchesSearch =
+  //     !search ||
+  //     product.title.toLowerCase().includes(search.toLowerCase());
+  
+  //   const matchesCategory =
+  //     !selectedCategory || product.category?._id === selectedCategory;
+  
+  //   const matchesBrand =
+  //     !selectedBrand || product.brand?._id === selectedBrand;
+  
+  //   return matchesSearch && matchesCategory && matchesBrand;
+  // });
 
-  const filteredProducts = products.filter((product) => {
-    const matchesSearch =
-      !search ||
-      product.title.toLowerCase().includes(search.toLowerCase());
-  
-    const matchesCategory =
-      !selectedCategory || product.category?._id === selectedCategory;
-  
-    const matchesBrand =
-      !selectedBrand || product.brand?._id === selectedBrand;
-  
-    return matchesSearch && matchesCategory && matchesBrand;
-  });
+  const totalPages = productsRes?.data?.metadata?.numberOfPages;
+
   if (productsLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
@@ -69,8 +83,6 @@ export default function Products() {
     );
   }
 
-  console.log("product",products);
-  
   return (
     <>
       <input
@@ -145,7 +157,28 @@ export default function Products() {
             )}
         </div>
       </div>
-      <DisplayProducts filterproducts={filteredProducts} />
+      <DisplayProducts products={products} />
+      <div className="flex justify-center items-center gap-4 mt-8 mb-8">
+        <button
+          disabled={currentPage === 1}
+          onClick={() => setCurrentPage(prev => prev - 1)}
+          className='cursor-pointer bg-neutral-300 rounded py-1 px-3'
+        >
+          Previous
+        </button>
+
+        <span>
+          Page {currentPage} of {totalPages}
+        </span>
+
+        <button
+          disabled={currentPage === totalPages}
+          onClick={() => setCurrentPage(prev => prev + 1)}
+          className='cursor-pointer bg-neutral-300 rounded py-1 px-3'
+        >
+          Next
+        </button>
+      </div>
     </>
   );
 } 
